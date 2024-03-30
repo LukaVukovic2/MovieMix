@@ -1,0 +1,18 @@
+body{
+  padding: 0;
+  margin: 0;
+}
+.movie-container, .actors-container{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+.movie{
+  display: inline-block;
+  text-align: center;
+}
+
+.img{
+  width: 300px;
+}
