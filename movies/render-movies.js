@@ -1,7 +1,7 @@
 import { fetchMovies } from "../api/api-config.js"
 
 let moviesData;
-const moviesContainer = document.querySelector('.swiper-wrapper');
+const moviesContainer = document.querySelector('.movie-wrapper');
 
 const displayMovies = async () => {
   moviesData = await fetchMovies();
@@ -9,15 +9,16 @@ const displayMovies = async () => {
   if (moviesData) {
     console.log(moviesData);
     moviesData.results.forEach((movie) => {
-      const particularMovie = document.createElement('div');
-      particularMovie.classList.add('swiper-slide');
-      particularMovie.innerHTML += 
+      const movieEl = document.createElement('div');
+      movieEl.classList.add('swiper-slide');
+      movieEl.innerHTML += 
         ` <a href="./movie.html?id=${movie.id}"><img src="https://image.tmdb.org/t/p/original${movie.backdrop_path}" class="img" alt="Image"></a>
           <div class="movie-info">
             <p>${movie.title ? movie.title : movie.name}</p>
             <p class="movie-rating ${getColor(movie.vote_average)}">${movie.vote_average.toFixed(2)}</p>
-          </div>`
-      moviesContainer.appendChild(particularMovie);
+          </div>
+          `
+      moviesContainer.appendChild(movieEl);
     });
   } else {
     console.log('Failed to fetch movies data');
@@ -38,5 +39,17 @@ function getColor(rating){
     return "red";
   }
 }
+
+var swiper1 = new Swiper('.movie-container', {
+  slidesPerView: 4.5,
+  spaceBetween: 10,
+  slidesPerGroup: 4,
+  navigation: {
+    nextEl: '#movies-next',
+    prevEl: '#movies-prev',
+  },
+});
+
+
 
 displayMovies();

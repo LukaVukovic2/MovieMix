@@ -20,6 +20,7 @@
         <li><a href="#"><img class="logo" src="images/moviemix.png" alt="logo"></a></li>
         <li><a href="#"><i class="fa-regular fa-heart"></i> Favorites</a></li>
         <li><a href="#"><i class="fa-regular fa-envelope"></i> Contact</a></li>
+        <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
       </ul>
       <div>
         <input class="searchbar" type="search" placeholder="Search Movies">
@@ -27,29 +28,31 @@
     </nav>
   </header>
   <div class="main">
-    <h1>Trending Movies</h1>
+    <h2>Trending Movies</h2>
     <div style="position: relative;">
       <div class="movie-container">
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper movie-wrapper">
         </div>
       </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+
+      <div class="swiper-button-prev" id="movies-prev"></div>
+      <div class="swiper-button-next" id="movies-next"></div>
     </div>
+
+    <h2>Popular Actors/Actresses</h2>
+    <div style="position: relative;">
+      <div class="actors-container">
+        <div class="swiper-wrapper actors-wrapper">
+        </div>
+      </div>
+
+      <div class="swiper-button-prev" id="actors-prev"></div>
+      <div class="swiper-button-next" id="actors-next"></div>
+    </div>
+    
   </div>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="movies/render-movies.js" type="module"></script>
   <script src="movies/render-actors.js" type="module"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script>
-    var swiper = new Swiper('.movie-container', {
-      slidesPerView: 4.5,
-      spaceBetween: 10,
-      slidesPerGroup: 4,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-  </script>
 </body>
 </html>
