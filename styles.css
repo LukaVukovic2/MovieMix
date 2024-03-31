@@ -1,18 +1,113 @@
+@font-face {
+  font-family: MovieMix;
+  src: url('fonts/NetflixSans-Regular.otf');
+}
 body{
   padding: 0;
   margin: 0;
+  font-family: MovieMix;
+  background-color: #181818;
+  color: white;
 }
+
+.main{
+  padding: 0 50px;
+}
+
+.logo{
+  width: 200px;
+}
+
 .movie-container, .actors-container{
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.movie-info{
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 5px;
+  align-items: center;
+  padding: 0 5px;
 }
-.movie{
-  display: inline-block;
-  text-align: center;
+
+.movie-rating{
+  padding: 5px;
+  background-color: rgba(0, 0, 139, 0.696);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.green{
+  color: green;
+}
+
+.yellow{
+  color: yellow;
+}
+
+.orange{
+  color: orange;
+}
+
+.red{
+  color: red;
 }
 
 .img{
   width: 300px;
+}
+
+.header{
+  background-color: black;
+  padding: 0 50px;
+}
+
+.nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50px;
+}
+
+ul{
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ul li{
+  padding-right: 40px;
+}
+
+ul li a{
+  text-decoration: none;
+  color: #e50914;
+}
+
+.searchbar{
+  line-height: 175%;
+}
+
+.swiper-button-next, .swiper-button-prev{
+  color: #e50914;
+  top: var(--swiper-navigation-top-offset, 40%);
+}
+
+.swiper-button-next{
+  right: var(--swiper-navigation-sides-offset, -40px)
+}
+
+.swiper-button-prev{
+  left: var(--swiper-navigation-sides-offset, -40px);
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+}
+.swiper-button-disabled{
+  display: none;
 }
