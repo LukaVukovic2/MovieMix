@@ -5,14 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="images/favicon/site.webmanifest">
+  <script src="https://kit.fontawesome.com/71a65fb293.js" crossorigin="anonymous"></script>
   <title>Movie</title>
 </head>
 <body>
-  <div class="movie-detail">
+  <header class="header">
+    <nav class="nav">
+      <ul>
+        <li><a href="home.html"><img class="logo" src="images/moviemix.png" alt="logo"></a></li>
+        <li><a href="#"><i class="fa-regular fa-heart"></i> <span class="nav-items-text"> Favorites</span></a></li>
+        <li><a href="#"><i class="fa-regular fa-envelope"></i> <span class="nav-items-text"> Contact</span></a></li>
+        <li><a href="#"><i class="fa-solid fa-gear"></i> <span class="nav-items-text"> Settings</span></a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="movie-detail-wrapper main">
+      <div class="movie-detail">
+      </div>
+      <div class="cast-container">
+      </div>
+    </div>
+  </div>
+  <div class="movie-extra-desc">
+    <div class="tagline"></div>
+    <div class="cast-photos-container">
+      <h2>Cast</h2>
+      <div class="cast-photos"></div>
+    </div>
+    <div class="genres-container">
+      <h2>Genres</h2>
+      <div class="genres"></div>
+    </div>
   </div>
   <script src="movies/movie-detail.js" type="module"></script>
 </body>

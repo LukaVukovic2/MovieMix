@@ -1,3 +1,7 @@
+:root {
+  --nav-height: 546px;
+}
+
 @font-face {
   font-family: MovieMix;
   src: url('fonts/NetflixSans-Regular.otf');
@@ -67,7 +71,6 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 50px;
 }
 
 ul{
@@ -79,7 +82,7 @@ ul{
 }
 
 ul li{
-  padding-right: 40px;
+  padding-right: 2vw;
 }
 
 ul li a{
@@ -111,4 +114,113 @@ ul li a{
 
 .swiper-button-disabled{
   display: none;
+}
+
+.container{
+  position: relative;
+}
+
+.movie-img{
+  max-width: 100vw;
+  max-height: calc(100vh - 102px);
+}
+
+.movie-detail-wrapper{
+  position: absolute;
+  top: 100px;
+  z-index: 10;
+  width: 34vw;
+}
+@media(max-width: 900px){
+  .movie-detail-wrapper{
+    top: 10px;
+    width: 70vw;
+  }
+}
+
+@media(max-width: 700px){
+  .movie-detail-wrapper{
+    top: 30px;
+    width: 80vw;
+  }
+  .nav-items-text{
+    display: none;
+  }
+}
+
+@media(max-width: 600px){
+  .logo{
+    width: 30%;
+  }
+  .header, .main{
+    padding: 0 10px;
+  }
+  .movie-detail-wrapper{
+    position: static;
+  }
+  .img-container{
+    position: static !important;
+  }
+  .img-container:after{
+    display: none;
+  }
+}
+
+
+@media(max-width: 500px){
+}
+
+.movie-detail-wrapper > *{
+  text-shadow: 30px 10px 40px #000, 30px -10px 40px #000;
+}
+
+.img-container{
+  position: absolute;
+  right: 0;
+}
+
+.img-container:after{
+  width:100%;
+  height:100%;
+  content:'';
+  position: absolute;
+  top:0;
+  left:0;
+  background-image: linear-gradient(
+    to right,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(24, 24, 24, 0.95) 20%,
+    rgba(24, 24, 24, 0.85) 30%,
+    rgba(24, 24, 24, 0.80) 40%,
+    rgba(24, 24, 24, 0.75) 50%,
+    rgba(24, 24, 24, 0.65) 60%,
+    rgba(24, 24, 24, 0.50) 70%,
+    rgba(24, 24, 24, 0.35) 80%,
+    rgba(24, 24, 24, 0.2) 90%,
+    rgba(24, 24, 24, 0.1) 95%,
+    rgba(24, 24, 24, 0) 100%
+  );
+}
+
+.movie-extra-desc{
+  text-align: center;
+}
+
+.tagline{
+  font-size: 30px;
+  padding: 50px 0;
+}
+
+.genres{
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.cast-photos{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }

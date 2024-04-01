@@ -34,4 +34,46 @@ const fetchActors = async () =>{
   }
 }
 
-export { fetchMovies, fetchActors };
+const getMovieById = async (id) =>{
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, options);
+    if (!response.ok) {
+      throw new Error('Failed to get movie');
+    }
+    const movie = await response.json();
+    return movie;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+const getCastInfo = async (id) => {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, options);
+    if (!response.ok) {
+      throw new Error('Failed to get movie');
+    }
+    const movie = await response.json();
+    return movie;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+const getMoviesByActor = async (id) => {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_people=${id}`, options);
+    if (!response.ok) {
+      throw new Error('Failed to get movie');
+    }
+    const movies = await response.json();
+    return movies;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor};

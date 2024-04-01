@@ -7,7 +7,6 @@ const displayMovies = async () => {
   moviesData = await fetchMovies();
 
   if (moviesData) {
-    console.log(moviesData);
     moviesData.results.forEach((movie) => {
       const movieEl = document.createElement('div');
       movieEl.classList.add('swiper-slide');
@@ -49,7 +48,5 @@ var swiper1 = new Swiper('.movie-container', {
     prevEl: '#movies-prev',
   },
 });
-
-
 
 displayMovies();

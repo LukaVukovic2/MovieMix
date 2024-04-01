@@ -7,7 +7,6 @@ const displayActors = async () => {
   actorsData = await fetchActors();
 
   if (actorsData) {
-    console.log(actorsData);
     actorsData.results.forEach((actor) => {
       if(actor.profile_path){
         const actorEl = document.createElement('div');
