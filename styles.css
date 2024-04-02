@@ -64,7 +64,7 @@ body{
 
 .header{
   background-color: black;
-  padding: 0 50px;
+  padding: 0 5%;
 }
 
 .nav{
@@ -88,6 +88,7 @@ ul li{
 ul li a{
   text-decoration: none;
   color: #e50914;
+  display: block;
 }
 
 .searchbar{
@@ -116,21 +117,10 @@ ul li a{
   display: none;
 }
 
-.container{
-  position: relative;
-}
-
-.movie-img{
-  max-width: 100vw;
-  max-height: calc(100vh - 102px);
-}
-
 .movie-detail-wrapper{
-  position: absolute;
-  top: 100px;
-  z-index: 10;
   width: 34vw;
 }
+
 @media(max-width: 900px){
   .movie-detail-wrapper{
     top: 10px;
@@ -139,30 +129,17 @@ ul li a{
 }
 
 @media(max-width: 700px){
-  .movie-detail-wrapper{
-    top: 30px;
-    width: 80vw;
-  }
   .nav-items-text{
     display: none;
+  }
+  .logo{
+    width: 30%;
   }
 }
 
 @media(max-width: 600px){
-  .logo{
-    width: 30%;
-  }
-  .header, .main{
-    padding: 0 10px;
-  }
-  .movie-detail-wrapper{
-    position: static;
-  }
-  .img-container{
-    position: static !important;
-  }
-  .img-container:after{
-    display: none;
+  .header{
+    padding: 0% 5%;
   }
 }
 
@@ -174,12 +151,16 @@ ul li a{
   text-shadow: 30px 10px 40px #000, 30px -10px 40px #000;
 }
 
-.img-container{
-  position: absolute;
-  right: 0;
+.bg-image{
+  position: relative;
+  z-index: -10;
+  padding: 15% 5%;
+  background-size: cover !important;
+  background-position: center center !important;
 }
 
-.img-container:after{
+.bg-image:after{
+  z-index: -5;
   width:100%;
   height:100%;
   content:'';
@@ -208,19 +189,54 @@ ul li a{
 
 .tagline{
   font-size: 30px;
-  padding: 50px 0;
+  padding-top: 50px;
 }
 
 .genres{
-  width: 50%;
-  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.genres-container{
+  padding: 40px 20% 60px;
 }
 
 .cast-photos{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.no-margin{
+  margin: 0;
+}
+
+.actor-name{
+  position: absolute; 
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(24, 24, 24, 0.80);
+  color: #fff;
+}
+
+.main-content{
+  padding: 0 10%;
+}
+
+hr{
+  border: none;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(24, 24, 24, 1) 0%, rgb(100, 100, 100) 50%, rgba(24,24,24, 1) 100%);
+}
+
+.whole-cast{
+  color: rgb(155, 155, 155);
+  text-align: start;
+  padding: 50px 0;
+}
+
+.whole-cast a{
+  color: white;
+  text-decoration: none;
 }
