@@ -2,15 +2,12 @@ import { getMovieById, getCastInfo } from "../api/api-config.js"
 
 const movieDetail = document.querySelector('.movie-detail');
 const bgImage = document.querySelector('.bg-image');
-const movieDetailWrapper = document.querySelector('.movie-detail-wrapper');
 const castContainer = document.querySelector('.cast-container');
-const movieExtraDesc = document.querySelector('.movie-extra-desc');
 const tagline = document.querySelector('.tagline');
 const genresContainer = document.querySelector('.genres-container');
 const castPhotosContainer = document.querySelector('.cast-photos-container');
 
 let movie;
-let imgEl;
 let hours;
 let mins;
 const urlParams = new URLSearchParams(window.location.search);
@@ -20,13 +17,20 @@ const getMovie = async (id) => {
   try {
     movie = await getMovieById(id);
     if (movie) {
-      bgImage.style.background = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
+      if(movie.backdrop_path){
+        bgImage.classList.add('primary-photo');
+        bgImage.style.background = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
+      }
+      else{
+        bgImage.classList.add('secondary-photo');
+        bgImage.style.background = `url('https://image.tmdb.org/t/p/original${movie.poster_path}'`;
+      }
 
       if(movie.tagline){
         tagline.innerHTML = `<i>${movie.tagline}</i><hr>`;
       }
       else{
-        tagline.style.display = "none";
+        tagline.innerHTML = "<hr>";
       }
 
       movieDetail.innerHTML = 
@@ -43,7 +47,7 @@ const getMovie = async (id) => {
         
         movie.genres.forEach(genre =>{
           genresEl.innerHTML += 
-          `<div style="border-bottom: 1px solid grey">${genre.name}</div>`;
+          `<div style="border-bottom: 1px solid grey"><a href="./genre.html?id=${genre.id}&name=${genre.name}">${genre.name}</a></div>`;
         })
         genresContainer.appendChild(genresEl);
       }
@@ -65,7 +69,10 @@ if(id){
       const castEl = document.createElement('div');
       const wholeCast = document.createElement('div');
       wholeCast.classList.add('whole-cast');
-      wholeCast.innerHTML = "Cast<br>"
+      wholeCast.innerHTML = "Rest of the Cast<br>";
+      if(movieWithId.cast.length === 3){
+        wholeCast.style.display = "none";
+      }
       castEl.classList.add('cast-photos')
 
       movieWithId.cast.forEach((actor,index) => {
@@ -86,7 +93,7 @@ if(id){
           `
           <div style="position:relative">
             <a href="./actor.html?id=${actor.id}" >
-              <img src="https://image.tmdb.org/t/p/original${actor.profile_path}" alt="photo" class="img" >
+              <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="img" >
               <div class="actor-name">
                 <p>${actor.name}</p>
               </div>

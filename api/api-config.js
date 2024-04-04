@@ -76,4 +76,30 @@ const getMoviesByActor = async (id) => {
   }
 }
 
-export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor};
+const getMoviesByGenre = async (id, page) => {
+  try {
+    let response = await fetch(`
+      https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=1000`
+    );
+    if (!response.ok){
+      throw new Error('Failed to get movies by genre');
+    }
+    let moviesByGenre = await response.json();
+    
+    if(moviesByGenre.results.length == 0){
+      response = await fetch(`
+        https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=10`
+      );
+      if (!response.ok){
+        throw new Error('Failed to get movies by genre');
+      }
+      moviesByGenre = await response.json();
+    }
+    return moviesByGenre;
+  } catch (error){
+    console.error(error);
+    return null;
+  }
+}
+
+export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre};
