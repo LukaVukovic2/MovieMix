@@ -1,6 +1,7 @@
 import { getMovieById, getCastInfo } from "../api/api-config.js"
 
 const movieDetail = document.querySelector('.movie-detail');
+const movieDetailContainer = document.querySelector('.movie-detail-container');
 const bgImage = document.querySelector('.bg-image');
 const castContainer = document.querySelector('.cast-container');
 const tagline = document.querySelector('.tagline');
@@ -16,6 +17,11 @@ const id = urlParams.get('id');
 const getMovie = async (id) => {
   try {
     movie = await getMovieById(id);
+    if (movie instanceof Error) {
+      bgImage.innerHTML = "This movie is probably new so we haven't got its data yet!";
+      throw new Error('Failed to get movie');
+    } 
+    
     if (movie) {
       if(movie.backdrop_path){
         bgImage.classList.add('primary-photo');

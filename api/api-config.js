@@ -42,9 +42,10 @@ const getMovieById = async (id) =>{
     }
     const movie = await response.json();
     return movie;
-  } catch (error) {
+  } 
+  catch (error) {
     console.error(error);
-    return null;
+    return error;
   }
 }
 
@@ -64,7 +65,10 @@ const getCastInfo = async (id) => {
 
 const getMoviesByActor = async (id) => {
   try {
-    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_people=${id}`, options);
+    const response = await fetch(`
+      https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_people=${id}`,
+      options
+    );
     if (!response.ok) {
       throw new Error('Failed to get movie');
     }
@@ -79,16 +83,18 @@ const getMoviesByActor = async (id) => {
 const getMoviesByGenre = async (id, page) => {
   try {
     let response = await fetch(`
-      https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=1000`
+      https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=1000`,
+      options
     );
     if (!response.ok){
       throw new Error('Failed to get movies by genre');
     }
     let moviesByGenre = await response.json();
     
-    if(moviesByGenre.results.length == 0){
+    if(moviesByGenre.results.length < 10){
       response = await fetch(`
-        https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=10`
+        https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=10`,
+        options
       );
       if (!response.ok){
         throw new Error('Failed to get movies by genre');
