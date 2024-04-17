@@ -108,4 +108,18 @@ const getMoviesByGenre = async (id, page) => {
   }
 }
 
-export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre};
+const getActorInfo = async (id) =>{
+  try{
+    let response = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, options);
+    if(!response.ok){
+      throw new Error('Failed to get actors information');
+    }
+    let actorsInfo = await response.json();
+    return actorsInfo;
+  }
+  catch(error){
+    console.error(error);
+    return null;
+  }
+}
+export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo};

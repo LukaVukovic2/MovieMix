@@ -5,11 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MovieMix - Actor</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
   <link rel="manifest" href="images/favicon/site.webmanifest">
+  <link rel="stylesheet" href="actor.css">
   <script src="https://kit.fontawesome.com/71a65fb293.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -23,7 +25,24 @@
       </ul>
     </nav>
   </header>
-  <h1>hello</h1>
-  <script src="movies/actor-movies.js" type="module"></script>
+  <div class="actor-container">
+    <div class="actor-data">
+      <div class="bg-image-cont">
+        <img src="" alt="" class="actor-image">
+      </div>
+      <div class="actor-desc"></div>
+    </div>
+    <hr>
+    <div class="movie-root">
+      <div class="movie-container">
+        <div class="swiper-wrapper movie-wrapper">
+        </div>
+      </div>
+      <div class="swiper-button-prev" id="movies-prev"></div>
+      <div class="swiper-button-next" id="movies-next"></div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="scripts/actor-info.js" type="module"></script>
 </body>
 </html>

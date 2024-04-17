@@ -7,7 +7,7 @@ const displayMovies = async () => {
   moviesData = await fetchMovies();
 
   if (moviesData) {
-    moviesData.results.forEach((movie) => {
+    moviesData.results.forEach(movie => {
       const movieEl = document.createElement('div');
       movieEl.classList.add('swiper-slide');
       movieEl.innerHTML += 

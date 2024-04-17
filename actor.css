@@ -1,0 +1,65 @@
+.actor-data{
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+}
+.actor-image{
+  max-height: 100%;
+  width: 100%;
+  background-size: contain !important;
+}
+
+.actor-desc{
+  max-width: 73%;
+  min-width: 50%;
+}
+
+.bg-image-cont{
+  min-width: 25%;
+  position: relative;
+}
+
+.bg-image-cont:after{
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to left,
+    rgba(24, 24, 24, 1) 0%,
+    rgba(24, 24, 24, 0) 50%
+  ),
+  linear-gradient(to top,
+  rgba(24, 24, 24, 1) 0%,
+  rgba(24, 24, 24, 0) 50%);
+}
+
+.alive{
+  display: none;
+}
+
+.movie-cont{
+  width: 22%;
+  border-radius: 50%;
+}
+
+.movie-img{
+  width: 100%;
+}
+
+.actor-movies{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.movie-root{
+  position: relative;
+  width: 80%;
+  padding-top: 50px;
+  margin: 0 auto;
+}
