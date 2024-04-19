@@ -221,7 +221,7 @@ ul li a{
 .cast-photos{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .no-margin{

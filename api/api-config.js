@@ -91,7 +91,7 @@ const getMoviesByGenre = async (id, page) => {
     }
     let moviesByGenre = await response.json();
     
-    if(moviesByGenre.results.length < 10){
+    if(moviesByGenre.results.length < 20){
       response = await fetch(`
         https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=10`,
         options
@@ -110,11 +110,11 @@ const getMoviesByGenre = async (id, page) => {
 
 const getActorInfo = async (id) =>{
   try{
-    let response = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, options);
+    const response = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, options);
     if(!response.ok){
       throw new Error('Failed to get actors information');
     }
-    let actorsInfo = await response.json();
+    const actorsInfo = await response.json();
     return actorsInfo;
   }
   catch(error){
@@ -122,4 +122,35 @@ const getActorInfo = async (id) =>{
     return null;
   }
 }
-export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo};
+
+const startGuestSession = async() =>{
+  try{
+    const response = await fetch('https://api.themoviedb.org/3/authentication/guest_session/new?api_key=3fd22b3493d4824f8bcdb7e3344a6596', options);
+    if(!response.ok){
+      throw new Error('Failed to start session');
+    }
+    const resData = await response.json();
+    return resData;
+  }
+  catch(error){
+    console.error(error);
+    return null;
+  }
+}
+
+const getLists = async()=>{
+  try{
+    const response = await fetch('https://api.themoviedb.org/3/account/21156170/lists?page=1', options);
+    if(!response.ok){
+      throw new Error('Failed to get lists');
+    }
+    const resData = await response.json();
+    return resData;
+  }
+  catch(error){
+    console.error(error);
+    return null;
+  }
+}
+
+export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo, startGuestSession, getLists};

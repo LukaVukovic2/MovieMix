@@ -12,11 +12,11 @@ const getActorData = async ()=>{
   actor = await getActorInfo(id);
   if(actor){
     let bio = actor.biography.replace(/\n/g, "<br>");
-    actorImage.setAttribute("src", `https://image.tmdb.org/t/p/original${actor.profile_path}`);
+    actorImage.setAttribute("src", actor.profile_path ? `https://image.tmdb.org/t/p/original${actor.profile_path}`: `images/photo-unavailable.png`);
     actorData.innerHTML += `
       <h2>${actor.name}</h2>${bio}
       <p>Age: ${actor.birthday ? getAge(actor.birthday): "unknown"}</p>
-      <p>Birthday: ${actor.birthday ? actor.birthday : "unknown"}</p>
+      <p>Birthday: ${actor.birthday ? new Date(actor.birthday).toLocaleDateString() : "unknown"}</p>
       <p class="${isDeceased(actor.deathday)}">Death: ${actor.deathday}</p>
       <p>Placed of birth: ${actor.place_of_birth ? actor.place_of_birth : "unknown"}</p>
     `;

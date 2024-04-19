@@ -38,7 +38,6 @@ const getMovie = async (id) => {
       else{
         tagline.innerHTML = "<hr>";
       }
-
       movieDetail.innerHTML = 
       `
         <h2 class="no-margin">${movie.title ? movie.title : movie.name}</h2>
@@ -75,11 +74,15 @@ if(id){
       const castEl = document.createElement('div');
       const wholeCast = document.createElement('div');
       wholeCast.classList.add('whole-cast');
-      wholeCast.innerHTML = "Rest of the Cast<br>";
+      wholeCast.innerHTML = "Rest of the Cast<br><br>";
       if(movieWithId.cast.length === 3){
         wholeCast.style.display = "none";
       }
       castEl.classList.add('cast-photos')
+
+      if(movieWithId.cast.length <= 3){
+        wholeCast.innerHTML += "unknown";
+      }
 
       movieWithId.cast.forEach((actor,index) => {
         if(index >= 3){
@@ -91,9 +94,10 @@ if(id){
           }
         }
         else{
+          const numberOfActors = movieWithId.cast.length > 3 ? 3 : movieWithId.cast.length;
           castContainer.innerHTML +=  
           `
-            ${index < 2 ? actor.name + ', ' : actor.name} 
+            ${index < numberOfActors - 1 ? actor.name + ', ' : actor.name} 
             `
           castEl.innerHTML +=
           `
@@ -126,6 +130,6 @@ function getMovieDuration(minutes){
   }
   else{
     mins = minutes;
-    return `${mins}`;
+    return `${mins}m`;
   }
 }
