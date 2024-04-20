@@ -1,22 +1,44 @@
-import { getMovieById, getCastInfo } from "../api/api-config.js"
+import { getMovieById, getCastInfo, addFavoriteMovie } from "../api/api-config.js"
 
 const movieDetail = document.querySelector('.movie-detail');
-const movieDetailContainer = document.querySelector('.movie-detail-container');
+const mainContent = document.querySelector('.main-content')
+const movieExtraDesc = document.querySelector('.movie-extra-desc');
 const bgImage = document.querySelector('.bg-image');
 const castContainer = document.querySelector('.cast-container');
 const tagline = document.querySelector('.tagline');
 const genresContainer = document.querySelector('.genres-container');
 const castPhotosContainer = document.querySelector('.cast-photos-container');
 
+let addToFavBtn;
 let movie;
 let hours;
 let mins;
+let favoriteMovie;
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
+
+const addToFavorite = async() =>{
+  const sessionId = localStorage.getItem("guestSessionId")
+  if(sessionId){
+    favoriteMovie = await addFavoriteMovie(sessionId, id);
+    console.log(favoriteMovie);
+  }
+}
 
 const getMovie = async (id) => {
   try {
     movie = await getMovieById(id);
+
+    addToFavBtn = document.createElement('a');
+    addToFavBtn.classList.add('add-to-favorites');
+    addToFavBtn.innerHTML = "<i class='fa-regular fa-heart'></i> Add To Favorites";
+    
+    mainContent.insertBefore(addToFavBtn, movieExtraDesc);
+    addToFavBtn.addEventListener("click", ()=>{
+      addToFavorite();
+      console.log('4 minutes')
+    })
+
     if (movie instanceof Error) {
       bgImage.innerHTML = "This movie is probably new so we haven't got its data yet!";
       throw new Error('Failed to get movie');
@@ -38,12 +60,14 @@ const getMovie = async (id) => {
       else{
         tagline.innerHTML = "<hr>";
       }
-      movieDetail.innerHTML = 
+    
+      movieDetail.innerHTML += 
       `
-        <h2 class="no-margin">${movie.title ? movie.title : movie.name}</h2>
-        <p>${new Date(movie.release_date).getFullYear()} | ${getMovieDuration(movie.runtime)} | ${movie.genres[0].name}</p>
-        <p>${movie.overview}</p>
+      <h2 class="no-margin">${movie.title ? movie.title : movie.name}</h2>
+      <p>${new Date(movie.release_date).getFullYear()} | ${getMovieDuration(movie.runtime)} | ${movie.genres[0].name}</p>
+      <p>${movie.overview}</p>
       `;
+  
 
       if(movie.genres){
         genresContainer.innerHTML = "<h2>Genres</h2>";
@@ -114,6 +138,7 @@ if(id){
         }
         castPhotosContainer.appendChild(wholeCast);
       });
+      
     } else {
       castContainer.innerHTML += " unknown";
     }
@@ -133,3 +158,4 @@ function getMovieDuration(minutes){
     return `${mins}m`;
   }
 }
+

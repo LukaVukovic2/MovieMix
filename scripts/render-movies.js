@@ -1,29 +1,20 @@
-import { fetchMovies, startGuestSession, getLists } from "../api/api-config.js"
+import { fetchMovies, startGuestSession } from "../api/api-config.js"
 
 let moviesData;
 let session;
-let lists;
 const moviesContainer = document.querySelector('.movie-wrapper');
 
 const startSession = async()=>{
   session = await startGuestSession();
   const miliseconds = new Date(session.expires_at).getTime();
   localStorage.setItem("expirationTime", JSON.stringify(miliseconds));
+  localStorage.setItem("guestSessionId", session.guest_session_id);
   console.log(session);
 }
-
-console.log(new Date().toISOString())
 
 if(localStorage.getItem("expirationTime") < new Date().getTime()){
   startSession();
 }
-
-const getGuestLists = async() =>{
-  lists = await getLists();
-  console.log(lists);
-}
-
-getGuestLists();
 
 const displayMovies = async () => {
   moviesData = await fetchMovies();
