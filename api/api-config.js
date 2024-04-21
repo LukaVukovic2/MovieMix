@@ -153,10 +153,11 @@ const getLists = async()=>{
   }
 }
 
-const addFavoriteMovie = async(guestId, movieId) =>{
+const addMovieRating = async(guestId, movieId, rating) =>{
   try{
+    console.log(rating)
      const response = await fetch(`
-      https://api.themoviedb.org/3/account/${guestId}/favorite`,
+     https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`,
       {
         method: 'POST',
         headers: {
@@ -164,9 +165,12 @@ const addFavoriteMovie = async(guestId, movieId) =>{
           'content-type': 'application/json',
           Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
         },
-        body: JSON.stringify({media_type: 'movie', media_id: movieId, favorite: true})
+        body: `{"value": ${rating}}`
       }
     );
+    if(!response.ok){
+      throw new Error('Failed to add rating');
+    }
     const resData = await response.json();
     return resData;
   }
@@ -176,12 +180,12 @@ const addFavoriteMovie = async(guestId, movieId) =>{
   }
 }
 
-const getFavoriteMovies = async (guestId)=>{
+const getMyMovieRatings = async (guestId)=>{
   try{
     console.log(guestId)
-    const response = await fetch(`https://api.themoviedb.org/3/account/${guestId}/favorite/movies`, optionsGet);
+    const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies`, optionsGet);
     if(!response.ok){
-      throw new Error('Failed to display favorites');
+      throw new Error('Failed to display your ratings');
     }
     const resData = await response.json();
     return resData;
@@ -193,4 +197,4 @@ const getFavoriteMovies = async (guestId)=>{
 }
 
 export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo, startGuestSession, 
-  addFavoriteMovie, getFavoriteMovies};
+  addMovieRating, getMyMovieRatings};

@@ -1,4 +1,4 @@
-import { getMovieById, getCastInfo, addFavoriteMovie } from "../api/api-config.js"
+import { getMovieById, getCastInfo, addMovieRating } from "../api/api-config.js"
 
 const movieDetail = document.querySelector('.movie-detail');
 const mainContent = document.querySelector('.main-content')
@@ -9,35 +9,29 @@ const tagline = document.querySelector('.tagline');
 const genresContainer = document.querySelector('.genres-container');
 const castPhotosContainer = document.querySelector('.cast-photos-container');
 
-let addToFavBtn;
+let addRatingBtn;
 let movie;
 let hours;
 let mins;
-let favoriteMovie;
+let res;
+let rating = 5;
+let ratingValueEl;
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 
-const addToFavorite = async() =>{
+const addRating = async() =>{
   const sessionId = localStorage.getItem("guestSessionId")
   if(sessionId){
-    favoriteMovie = await addFavoriteMovie(sessionId, id);
-    console.log(favoriteMovie);
+    console.log(sessionId + " " + id + " " + rating)
+    res = await addMovieRating(sessionId, id, rating);
+    console.log(res);
   }
 }
 
 const getMovie = async (id) => {
   try {
     movie = await getMovieById(id);
-
-    addToFavBtn = document.createElement('a');
-    addToFavBtn.classList.add('add-to-favorites');
-    addToFavBtn.innerHTML = "<i class='fa-regular fa-heart'></i> Add To Favorites";
-    
-    mainContent.insertBefore(addToFavBtn, movieExtraDesc);
-    addToFavBtn.addEventListener("click", ()=>{
-      addToFavorite();
-      console.log('4 minutes')
-    })
+    createRatingElement();
 
     if (movie instanceof Error) {
       bgImage.innerHTML = "This movie is probably new so we haven't got its data yet!";
@@ -159,3 +153,40 @@ function getMovieDuration(minutes){
   }
 }
 
+function showSelectedRating(e){
+  e.preventDefault();
+  rating = e.target.value;
+  ratingValueEl.innerHTML = rating;
+}
+
+function createRatingElement(){
+  const ratingInputEl = document.createElement('input');
+  ratingInputEl.setAttribute("type", "range");
+  ratingInputEl.setAttribute("min", "1");
+  ratingInputEl.setAttribute("max", "10");
+  ratingInputEl.setAttribute("step", "0.25");
+  ratingInputEl.setAttribute("value", "5")
+  ratingInputEl.addEventListener("input", showSelectedRating);
+
+  addRatingBtn = document.createElement('a');
+  addRatingBtn.classList.add('add-rating-btn');
+  addRatingBtn.innerHTML = `
+    Add Your Rating <i class="fa-regular fa-plus" style="color: #e50914;"></i>
+  `
+  addRatingBtn.addEventListener("click", ()=>{
+    addRating();
+    console.log('4 minutes')
+  })
+  ratingValueEl = document.createElement('span');
+  const ratingIcon = document.createElement('span');
+  ratingIcon.innerHTML = `<i class="fa-regular fa-star" style="color: #FFD43B;"></i>`;
+  ratingValueEl.innerHTML = '5';
+  
+  const ratingContainer = document.createElement('div');
+  ratingContainer.classList.add('rating-container')
+  ratingContainer.appendChild(ratingValueEl);
+  ratingContainer.appendChild(ratingIcon);
+  ratingContainer.appendChild(ratingInputEl);
+  ratingContainer.appendChild(addRatingBtn);
+  mainContent.insertBefore(ratingContainer, movieExtraDesc);
+}
