@@ -175,7 +175,7 @@ function createRatingElement(){
   `
   addRatingBtn.addEventListener("click", ()=>{
     addRating();
-    console.log('4 minutes')
+    alert('Rating is added!');
   })
   ratingValueEl = document.createElement('span');
   const ratingIcon = document.createElement('span');

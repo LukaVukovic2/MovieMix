@@ -6,6 +6,14 @@ const optionsGet = {
   }
 };
 
+const optionsDelete = {
+  method: 'DELETE',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
+  }
+}
+
 const fetchMovies = async () => {
   try {
     const response = await fetch('https://api.themoviedb.org/3/trending/all/day?language=en-US', optionsGet);
@@ -181,11 +189,17 @@ const addMovieRating = async(guestId, movieId, rating) =>{
 }
 
 const getMyMovieRatings = async (guestId)=>{
+  console.log(guestId)
+  const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies`, optionsGet);
+  const resData = await response.json();
+  return resData;
+}
+
+const deleteMovieRating = async (guestId, movieId)=>{
   try{
-    console.log(guestId)
-    const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies`, optionsGet);
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`, optionsDelete);
     if(!response.ok){
-      throw new Error('Failed to display your ratings');
+      throw new Error('Failed to delete rating');
     }
     const resData = await response.json();
     return resData;
@@ -197,4 +211,4 @@ const getMyMovieRatings = async (guestId)=>{
 }
 
 export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo, startGuestSession, 
-  addMovieRating, getMyMovieRatings};
+  addMovieRating, getMyMovieRatings, deleteMovieRating};
