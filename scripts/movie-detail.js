@@ -8,6 +8,8 @@ const castContainer = document.querySelector('.cast-container');
 const tagline = document.querySelector('.tagline');
 const genresContainer = document.querySelector('.genres-container');
 const castPhotosContainer = document.querySelector('.cast-photos-container');
+const optionalContainer = document.querySelector('.optional-container');
+const recommend = localStorage.getItem("recommend");
 
 let addRatingBtn;
 let movie;
@@ -73,6 +75,9 @@ const getMovie = async (id) => {
         })
         genresContainer.appendChild(genresEl);
       }
+      if(recommend == "yes"){
+        addOptionalElement(movie.similar.results.slice(0,3));
+      }
     }
   } catch (error) {
     console.error(error);
@@ -121,7 +126,7 @@ if(id){
           <div style="position:relative">
             <a href="./actor.html?id=${actor.id}" >
               <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="img" >
-              <div class="actor-name">
+              <div class="absolute-el-name">
                 <p>${actor.name}</p>
               </div>
             </a>
@@ -188,4 +193,28 @@ function createRatingElement(){
   ratingContainer.appendChild(ratingInputEl);
   ratingContainer.appendChild(addRatingBtn);
   mainContent.insertBefore(ratingContainer, movieExtraDesc);
+}
+
+function addOptionalElement(similar){
+  console.log(similar);
+  optionalContainer.innerHTML = `
+    <hr>
+    <h2>You might also like...</h2>
+  `
+  const optionalFlexEl = document.createElement('div');
+  optionalFlexEl.classList.add('optional-flex-container');
+
+  similar.forEach(recomMovie =>{
+    optionalFlexEl.innerHTML += `
+      <div class="recommended-movie">
+        <a href="movie.html?id=${recomMovie.id}">
+          <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="img" >
+          <div class="absolute-el-name">
+            <p>${recomMovie.title}</p>
+          </div>
+        </a>
+      </div>
+    `
+  })
+  optionalContainer.appendChild(optionalFlexEl);
 }

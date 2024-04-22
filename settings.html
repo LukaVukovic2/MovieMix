@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MovieMix - Actor</title>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <title>MovieMix - Settings</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
   <link rel="manifest" href="images/favicon/site.webmanifest">
-  <link rel="stylesheet" href="actor.css">
   <script src="https://kit.fontawesome.com/71a65fb293.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -21,28 +19,31 @@
         <li><a href="home.html"><img class="logo" src="images/moviemix.png" alt="logo"></a></li>
         <li><a href="my-ratings.html"><i class="fa-regular fa-heart"></i> <span class="nav-items-text"> My Ratings</span></a></li>
         <li><a href="#"><i class="fa-regular fa-envelope"></i> <span class="nav-items-text"> Contact</span></a></li>
-        <li><a href="settings.html"><i class="fa-solid fa-gear"></i> <span class="nav-items-text"> Settings</span></a></li>
+        <li><a href="#"><i class="fa-solid fa-gear"></i> <span class="nav-items-text"> Settings</span></a></li>
       </ul>
     </nav>
   </header>
-  <div class="actor-container">
-    <div class="actor-data">
-      <div class="bg-image-cont">
-        <img src="" alt="" class="actor-image">
-      </div>
-      <div class="actor-desc"></div>
-    </div>
-    <hr>
-    <div class="movie-root">
-      <div class="movie-container">
-        <div class="swiper-wrapper movie-wrapper">
-        </div>
-      </div>
-      <div class="swiper-button-prev" id="movies-prev"></div>
-      <div class="swiper-button-next" id="movies-next"></div>
-    </div>
+  <div class="settings">
+    <h2>Settings</h2>
+    <h5>1. You can set language in which you want to read movie data<br>*Some languages aren't fully supported yet!</h5>
+    <form id="settings-form">
+      <select id="language">
+        <option value="default" selected disabled>Choose desired language</option>
+        <option value="en-us">English</option>
+        <option value="de-de">Deutsch</option>
+        <option value="hr-hr">Hrvatski*</option>
+      </select>
+      <h5>2. Do you want movie recommendation<br>&#40;It can slow down website&#41;</h5>
+      <label for="radio-yes">
+        <input id="radio-yes" name="recommend" type="radio" value="yes">Yes
+      </label>
+      <label for="radio-no">
+        <input id="radio-no" name="recommend" type="radio" value="no">No
+      </label>
+      <br>
+      <button class="apply-changes-btn" type="submit">Apply Changes</button>
+    </form>
   </div>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="scripts/actor-info.js" type="module"></script>
+  <script src="scripts/settings.js" type="module"></script>
 </body>
 </html>

@@ -22,11 +22,9 @@ const getGenres = async() =>{
   if(genres){
     genres.genres.forEach(genre =>{
       genresContainer.innerHTML += `
-        <div class="genre-name">
-          <a href="genre.html?id=${genre.id}&name=${genre.name}">
-            ${genre.name}
-          </a>
-        </div>
+        <a class="genre-name" href="genre.html?id=${genre.id}&name=${genre.name}">
+          ${genre.name}
+        </a>
       ` 
     })
   }

@@ -1,22 +1,25 @@
+let language = "en-US";
+let appendToResponse = "";
+
+const headers = {
+  accept: 'application/json',
+  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
+}
+
 const optionsGet = {
   method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
-  }
+  headers
 };
 
 const optionsDelete = {
   method: 'DELETE',
-  headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
-  }
+  headers
 }
 
 const fetchMovies = async () => {
   try {
-    const response = await fetch('https://api.themoviedb.org/3/trending/all/day?language=en-US', optionsGet);
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/trending/all/day?language=${language}`, optionsGet);
     if (!response.ok) {
       throw new Error('Failed to fetch movies');
     }
@@ -30,7 +33,8 @@ const fetchMovies = async () => {
 
 const fetchActors = async () =>{
   try {
-    const response = await fetch('https://api.themoviedb.org/3/trending/person/day?language=en-US', optionsGet);
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/trending/person/day?language=${language}`, optionsGet);
     if(!response.ok){
       throw new Error('Failed to fetch actors');
     }
@@ -44,7 +48,8 @@ const fetchActors = async () =>{
 
 const getMovieById = async (id) =>{
   try {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, optionsGet);
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=${language}&append_to_response=${appendToResponse}`, optionsGet);
     if (!response.ok) {
       throw new Error('Failed to get movie');
     }
@@ -59,7 +64,8 @@ const getMovieById = async (id) =>{
 
 const getCastInfo = async (id) => {
   try {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, optionsGet);
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=${language}`, optionsGet);
     if (!response.ok) {
       throw new Error('Failed to get movie');
     }
@@ -73,8 +79,9 @@ const getCastInfo = async (id) => {
 
 const getMoviesByActor = async (id) => {
   try {
+    setPreferences();
     const response = await fetch(`
-      https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_people=${id}`,
+      https://api.themoviedb.org/3/discover/movie?with_people=${id}&language=${language}`,
       optionsGet
     );
     if (!response.ok) {
@@ -90,8 +97,9 @@ const getMoviesByActor = async (id) => {
 
 const getMoviesByGenre = async (id, page) => {
   try {
+    setPreferences();
     let response = await fetch(`
-      https://api.themoviedb.org/3/discover/movie?api_key=3fd22b3493d4824f8bcdb7e3344a6596&with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=1000`,
+      https://api.themoviedb.org/3/discover/movie?with_genres=${id}&page=${page}&sort_by=vote_average.desc&vote_count.gte=1000&language=${language}`,
       optionsGet
     );
     if (!response.ok){
@@ -118,7 +126,8 @@ const getMoviesByGenre = async (id, page) => {
 
 const getActorInfo = async (id) =>{
   try{
-    const response = await fetch(`https://api.themoviedb.org/3/person/${id}?api_key=3fd22b3493d4824f8bcdb7e3344a6596`, optionsGet);
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/person/${id}?language=${language}`, optionsGet);
     if(!response.ok){
       throw new Error('Failed to get actors information');
     }
@@ -133,7 +142,7 @@ const getActorInfo = async (id) =>{
 
 const startGuestSession = async() =>{
   try{
-    const response = await fetch('https://api.themoviedb.org/3/authentication/guest_session/new?api_key=3fd22b3493d4824f8bcdb7e3344a6596', optionsGet);
+    const response = await fetch(`https://api.themoviedb.org/3/authentication/guest_session/new?language=${language}`, optionsGet);
     if(!response.ok){
       throw new Error('Failed to start session');
     }
@@ -146,34 +155,18 @@ const startGuestSession = async() =>{
   }
 }
 
-const getLists = async()=>{
-  try{
-    const response = await fetch('https://api.themoviedb.org/3/account/21156170/lists?page=1', optionsGet);
-    if(!response.ok){
-      throw new Error('Failed to get lists');
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
-}
-
 const addMovieRating = async(guestId, movieId, rating) =>{
   try{
-    console.log(rating)
-     const response = await fetch(`
-     https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`,
-      {
-        method: 'POST',
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
-        },
-        body: `{"value": ${rating}}`
+    const response = await fetch(`
+    https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`,
+    {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
+      },
+      body: `{"value": ${rating}}`
       }
     );
     if(!response.ok){
@@ -189,9 +182,19 @@ const addMovieRating = async(guestId, movieId, rating) =>{
 }
 
 const getMyMovieRatings = async (guestId)=>{
-  const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies`, optionsGet);
-  const resData = await response.json();
-  return resData;
+  try{
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies?language=${language}`, optionsGet);
+    if(!response.ok){
+      throw new Error("Failed to get your ratings");
+    }
+    const resData = await response.json();
+    return resData;
+  }
+  catch(error){
+    console.error(error);
+    return null;
+  }
 }
 
 const deleteMovieRating = async (guestId, movieId)=>{
@@ -211,7 +214,8 @@ const deleteMovieRating = async (guestId, movieId)=>{
 
 const getGenresList = async() =>{
   try{
-    const response = await fetch("https://api.themoviedb.org/3/genre/movie/list", optionsGet);
+    setPreferences();
+    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?language=${language}`, optionsGet);
     if(!response.ok){
       throw new Error('Failed to get genres list');
     }
@@ -221,6 +225,17 @@ const getGenresList = async() =>{
   catch(error){
     console.error(error);
     return null;
+  }
+}
+
+function setPreferences(){
+  const selectedLanguage = localStorage.getItem("language");
+  const recommend = localStorage.getItem("recommend");
+  if(selectedLanguage){
+    language = selectedLanguage;
+  }
+  if(recommend == "yes"){
+    appendToResponse = "similar";
   }
 }
 

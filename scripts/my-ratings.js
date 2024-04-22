@@ -27,7 +27,7 @@ const getMyRatings = async ()=>{
       });
     }
     else{
-      myRatingsContainer.innerHTML = "<h2>You don't haven't rated movies so far!</h2>"
+      myRatingsContainer.innerHTML = "<h2>You haven't rated movies so far!</h2>"
     }
   }
 }

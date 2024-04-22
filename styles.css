@@ -20,9 +20,14 @@ body{
   flex-wrap: wrap;
 }
 
+
 .genre-name{
-  padding: 10px 20px;
   border: 1px solid #e50914;
+  padding: 10px 20px;
+}
+
+.genre-name:hover{
+  background-color: #333333;
 }
 
 .padding{
@@ -239,8 +244,10 @@ ul li a{
   margin: 0;
 }
 
-.actor-name{
+.absolute-el-name{
   position: absolute; 
+  text-align: center;
+  left: 0;
   bottom: 0;
   width: 100%;
   background-color: rgba(24, 24, 24, 0.80);
@@ -262,6 +269,10 @@ hr{
   color: rgb(155, 155, 155);
   text-align: start;
   padding: 50px 0;
+}
+
+.whole-cast a:hover{
+  color: rgb(155, 155, 155);
 }
 
 a{
@@ -330,4 +341,33 @@ input[type="range"]::-moz-range-thumb {
   margin: 0 auto;
   width: 200px;
   text-align: center;
+}
+
+.settings{
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.apply-changes-btn{
+  margin-top: 10px;
+  background-color: transparent;
+  border: 1px solid #e50914;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.apply-changes-btn:hover{
+  background-color: #333333;
+}
+
+.optional-flex-container{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 30px 0 50px;
+}
+
+.recommended-movie{
+  position: relative;
 }

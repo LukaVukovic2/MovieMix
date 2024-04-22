@@ -12,8 +12,9 @@
 }
 
 .actor-desc{
-  max-width: 73%;
+  max-width: 70%;
   min-width: 50%;
+  padding: 0 20px 20px;
 }
 
 .bg-image-cont{
