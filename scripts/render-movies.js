@@ -1,8 +1,9 @@
-import { fetchMovies, startGuestSession } from "../api/api-config.js"
+import { fetchMovies, startGuestSession, getGenresList } from "../api/api-config.js"
 
+const moviesContainer = document.querySelector('.movie-wrapper');
+const genresContainer = document.querySelector('.genres-list-container');
 let moviesData;
 let session;
-const moviesContainer = document.querySelector('.movie-wrapper');
 
 const startSession = async()=>{
   session = await startGuestSession();
@@ -15,6 +16,23 @@ const startSession = async()=>{
 if(localStorage.getItem("expirationTime") < new Date().getTime()){
   startSession();
 }
+
+const getGenres = async() =>{
+  const genres = await getGenresList();
+  if(genres){
+    genres.genres.forEach(genre =>{
+      genresContainer.innerHTML += `
+        <div class="genre-name">
+          <a href="genre.html?id=${genre.id}&name=${genre.name}">
+            ${genre.name}
+          </a>
+        </div>
+      ` 
+    })
+  }
+}
+
+getGenres();
 
 const displayMovies = async () => {
   moviesData = await fetchMovies();

@@ -14,8 +14,19 @@ body{
   color: white;
 }
 
+.genres-list-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.genre-name{
+  padding: 10px 20px;
+  border: 1px solid #e50914;
+}
+
 .padding{
-  padding: 0 5%;
+  padding: 20px 5%;
 }
 
 .logo{

@@ -22,7 +22,6 @@ const id = urlParams.get('id');
 const addRating = async() =>{
   const sessionId = localStorage.getItem("guestSessionId")
   if(sessionId){
-    console.log(sessionId + " " + id + " " + rating)
     res = await addMovieRating(sessionId, id, rating);
     console.log(res);
   }

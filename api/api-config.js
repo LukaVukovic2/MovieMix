@@ -189,7 +189,6 @@ const addMovieRating = async(guestId, movieId, rating) =>{
 }
 
 const getMyMovieRatings = async (guestId)=>{
-  console.log(guestId)
   const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies`, optionsGet);
   const resData = await response.json();
   return resData;
@@ -210,5 +209,20 @@ const deleteMovieRating = async (guestId, movieId)=>{
   }
 }
 
+const getGenresList = async() =>{
+  try{
+    const response = await fetch("https://api.themoviedb.org/3/genre/movie/list", optionsGet);
+    if(!response.ok){
+      throw new Error('Failed to get genres list');
+    }
+    const resData = await response.json();
+    return resData;
+  }
+  catch(error){
+    console.error(error);
+    return null;
+  }
+}
+
 export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo, startGuestSession, 
-  addMovieRating, getMyMovieRatings, deleteMovieRating};
+  addMovieRating, getMyMovieRatings, deleteMovieRating, getGenresList};

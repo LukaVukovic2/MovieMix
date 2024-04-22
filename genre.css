@@ -2,7 +2,7 @@
   width: 24%;
   min-height: 200px;
   background-size: cover !important;
-  margin: 20px 0;
+  margin-bottom: 20px;
   position: relative;
   text-align: center;
 }
@@ -13,6 +13,10 @@
 }
 .active{
   font-weight: bold;
+}
+
+.title{
+  text-align: center;
 }
 
 .active a{

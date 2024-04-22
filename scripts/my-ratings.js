@@ -6,7 +6,6 @@ const sessionId = localStorage.getItem("guestSessionId")
 const getMyRatings = async ()=>{
   if(sessionId){
     const myRatings = await getMyMovieRatings(sessionId);
-    console.log(myRatings)
     if(myRatings?.total_results > 0){
       myRatingsContainer.innerHTML = "";
       myRatings.results.forEach(ratedMovie => {

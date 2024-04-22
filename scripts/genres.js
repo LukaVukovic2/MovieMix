@@ -23,7 +23,7 @@ const getGenre = async (pageNumber) => {
       totalPages = 20;
       totalResults = 400;
     }
-    title.innerHTML = `<h2>${genreName}: Top ${totalResults} movies</h2>`;
+    title.innerHTML = `${genreName}: Top ${totalResults} movies`;
     if (moviesByPage.results && !isAdded) {
       addAllPages(moviesByPage.results.length);
     }
