@@ -70,13 +70,19 @@ const getMovie = async (id) => {
         genresEl.classList.add('genres')
         
         movie.genres.forEach(genre =>{
-          genresEl.innerHTML += 
-          `<div style="border-bottom: 1px solid grey"><a href="./genre.html?id=${genre.id}&name=${genre.name}">${genre.name}</a></div>`;
+          genresEl.innerHTML += `
+          <div style="border-bottom: 1px solid grey">
+            <a class="genre-info" href="./genre.html?id=${genre.id}&name=${genre.name}">${genre.name}</a>
+          </div>
+          `;
         })
         genresContainer.appendChild(genresEl);
       }
       if(recommend == "yes"){
-        addOptionalElement(movie.similar.results.slice(0,3));
+        addOptionalElement(
+          movie.similar.results.slice(0,3), 
+          movie.videos.results.slice(0,2)
+        );
       }
     }
   } catch (error) {
@@ -109,10 +115,10 @@ if(id){
       movieWithId.cast.forEach((actor,index) => {
         if(index >= 3){
           if(index !== movieWithId.cast.length - 1){
-            wholeCast.innerHTML +=`<a href="./actor.html?id=${actor.id}">${actor.name + ', '}</a>`;
+            wholeCast.innerHTML +=`<a class="actor-link" href="./actor.html?id=${actor.id}">${actor.name + ', '}</a>`;
           }
           else{
-            wholeCast.innerHTML +=`<a href="./actor.html?id=${actor.id}">${actor.name}</a>`;
+            wholeCast.innerHTML +=`<a class="actor-link" href="./actor.html?id=${actor.id}">${actor.name}</a>`;
           }
         }
         else{
@@ -175,7 +181,7 @@ function createRatingElement(){
   addRatingBtn = document.createElement('a');
   addRatingBtn.classList.add('add-rating-btn');
   addRatingBtn.innerHTML = `
-    Add Your Rating <i class="fa-regular fa-plus" style="color: #e50914;"></i>
+    Add Your Rating <i class="fa-regular fa-plus"></i>
   `
   addRatingBtn.addEventListener("click", ()=>{
     addRating();
@@ -195,26 +201,40 @@ function createRatingElement(){
   mainContent.insertBefore(ratingContainer, movieExtraDesc);
 }
 
-function addOptionalElement(similar){
-  console.log(similar);
-  optionalContainer.innerHTML = `
-    <hr>
-    <h2>You might also like...</h2>
-  `
-  const optionalFlexEl = document.createElement('div');
-  optionalFlexEl.classList.add('optional-flex-container');
-
-  similar.forEach(recomMovie =>{
-    optionalFlexEl.innerHTML += `
-      <div class="recommended-movie">
-        <a href="movie.html?id=${recomMovie.id}">
-          <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="img" >
-          <div class="absolute-el-name">
-            <p>${recomMovie.title}</p>
-          </div>
-        </a>
-      </div>
+function addOptionalElement(similar, videos){
+  const flexTrailersEl = document.createElement('div');
+  if(videos.length > 0){
+    optionalContainer.innerHTML = `
+      <hr>
+      <h2>Trailers and teasers</h2>
     `
-  })
-  optionalContainer.appendChild(optionalFlexEl);
+    flexTrailersEl.classList.add('optional-flex-container');
+    videos.forEach(video =>{
+      flexTrailersEl.innerHTML += `
+        <div class="optional-flex-item iframe-container">
+          <iframe class="iframe" width="100%" height="100%" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
+        </div>
+      `
+    })
+  }
+
+  const flexRecommendEl = document.createElement('div');
+  if(similar.length > 0){
+    flexRecommendEl.classList.add('optional-flex-container');
+    similar.forEach(recomMovie =>{
+      flexRecommendEl.innerHTML += `
+        <div class="optional-flex-item">
+          <a href="movie.html?id=${recomMovie.id}">
+            <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="img" >
+            <div class="absolute-el-name">
+              <p>${recomMovie.title}</p>
+            </div>
+          </a>
+        </div>
+      `
+    })
+  }
+  optionalContainer.appendChild(flexTrailersEl);
+  optionalContainer.innerHTML += "<h2>You might also like...</h2>"
+  optionalContainer.appendChild(flexRecommendEl);
 }

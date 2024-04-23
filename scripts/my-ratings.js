@@ -14,7 +14,7 @@ const getMyRatings = async ()=>{
         ratedMovieContainer.innerHTML = `
           <div>
             <span class="rating-value">${ratedMovie.rating} <i class="fa-regular fa-star" style="color: #e50914;"></i></span>
-            <span>${ratedMovie.title}</span>
+            <a class="movie-title" href="movie.html?id=${ratedMovie.id}">${ratedMovie.title}</a>
           </div>
           <a class="btn"><i class="fa-solid fa-minus"></i></a>`;
         ratedMovieContainer.querySelector('.btn').addEventListener("click", 

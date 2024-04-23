@@ -1,6 +1,7 @@
 const form = document.getElementById('settings-form');
 const selectedLanguage = document.getElementById('language');
 const selectedRecommendation = document.getElementsByName('recommend');
+const defaultOption = document.getElementById('language').attributes.id.ownerElement[0];
 const languageLS = localStorage.getItem("language");
 const recommendLS = localStorage.getItem("recommend");
 let recommend;
@@ -11,11 +12,11 @@ if(recommendLS && languageLS){
       option.checked = "true";
     }
   })
+  defaultOption.removeAttribute("selected");
   selectedLanguage.value = languageLS;
 }
 
 function validateForm(){
-  console.log(selectedRecommendation)
   selectedRecommendation.forEach(option =>{
 
     if(option.checked){

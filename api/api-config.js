@@ -235,7 +235,7 @@ function setPreferences(){
     language = selectedLanguage;
   }
   if(recommend == "yes"){
-    appendToResponse = "similar";
+    appendToResponse = "similar,videos";
   }
 }
 
