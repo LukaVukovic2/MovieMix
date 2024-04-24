@@ -228,6 +228,21 @@ const getGenresList = async() =>{
   }
 }
 
+const getSearchMatches = async(query) =>{
+  try{
+    const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}`, optionsGet);
+    if(!response.ok){
+      throw new Error("Failed to get matches");
+    }
+    const resData = await response.json();
+    return resData;
+  }
+  catch(error){
+    console.error(error);
+    return null;
+  }
+}
+
 function setPreferences(){
   const selectedLanguage = localStorage.getItem("language");
   const recommend = localStorage.getItem("recommend");
@@ -240,4 +255,4 @@ function setPreferences(){
 }
 
 export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo, startGuestSession, 
-  addMovieRating, getMyMovieRatings, deleteMovieRating, getGenresList};
+  addMovieRating, getMyMovieRatings, deleteMovieRating, getGenresList, getSearchMatches};

@@ -7,7 +7,7 @@ const getMyRatings = async ()=>{
   if(sessionId){
     const myRatings = await getMyMovieRatings(sessionId);
     if(myRatings?.total_results > 0){
-      myRatingsContainer.innerHTML = "";
+      myRatingsContainer.innerHTML = "<h2>My Movie ratings</h2>";
       myRatings.results.forEach(ratedMovie => {
         const ratedMovieContainer = document.createElement('div');
         ratedMovieContainer.classList.add('rated-movie');

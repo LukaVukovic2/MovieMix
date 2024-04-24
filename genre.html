@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +17,8 @@
 </head>
 <body>
   <header class="header">
-    <nav class="nav">
-      <ul>
+    <nav class="nav flex-space-between">
+      <ul class="flex-space-between">
         <li><a href="home.html"><img class="logo" src="images/moviemix.png" alt="logo"></a></li>
         <li><a href="my-ratings.html"><i class="fa-regular fa-heart"></i> <span class="nav-items-text"> My Ratings</span></a></li>
         <li><a href="#"><i class="fa-regular fa-envelope"></i> <span class="nav-items-text"> Contact</span></a></li>
@@ -28,8 +28,7 @@
   </header>
 
   <h2 class="title padding"></h2>
-  <div id="page" class="container">
-    
+  <div id="page" class="container flex-space-between">    
   </div>
   <nav aria-label=...>
     <ul class="pagination">
@@ -37,9 +36,7 @@
     </ul>
   </nav>
   
-  
   <script src="https://pagination.js.org/dist/2.6.0/pagination.min.js"></script>
   <script src="./scripts/genres.js" type="module"></script>
-  
 </body>
 </html>

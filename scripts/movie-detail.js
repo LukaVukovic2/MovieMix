@@ -36,6 +36,7 @@ const getMovie = async (id) => {
 
     if (movie instanceof Error) {
       bgImage.innerHTML = "This movie is probably new so we haven't got its data yet!";
+      mainContent.innerHTML = "";
       throw new Error('Failed to get movie');
     } 
     

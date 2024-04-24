@@ -33,7 +33,7 @@ const getGenre = async (pageNumber) => {
         container.innerHTML += `
         <a href="movie.html?id=${movie.id}>"
           <div class="movie-container" style="background: url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')">
-            <div class="movie-data">
+            <div class="movie-data flex-space-between">
               <div>${movie.title}</div>
               <div class="movie-rating">${movie.vote_average.toFixed(2)} <i class="fa-regular fa-star"></i></div>
             </div>

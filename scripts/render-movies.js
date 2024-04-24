@@ -41,7 +41,7 @@ const displayMovies = async () => {
       movieEl.classList.add('swiper-slide');
       movieEl.innerHTML += 
         ` <a href="./movie.html?id=${movie.id}"><img src="https://image.tmdb.org/t/p/original${movie.backdrop_path}" class="img" alt="Image"></a>
-          <div class="movie-info">
+          <div class="movie-info flex-space-between">
             <p>${movie.title ? movie.title : movie.name}</p>
             <p class="movie-rating ${getColor(movie.vote_average)}">${movie.vote_average.toFixed(2)} <i class="fa-regular fa-star"></i></p>
           </div>
