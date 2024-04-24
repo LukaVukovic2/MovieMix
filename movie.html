@@ -12,7 +12,7 @@
   <script src="https://kit.fontawesome.com/71a65fb293.js" crossorigin="anonymous"></script>
   <title>MovieMix - Movie</title>
 </head>
-<body>
+<body id="body">
   <header class="header">
     <nav class="nav flex-space-between">
       <ul class="flex-space-between">
@@ -21,6 +21,12 @@
         <li><a href="#"><i class="fa-regular fa-envelope"></i> <span class="nav-items-text"> Contact</span></a></li>
         <li><a href="settings.html"><i class="fa-solid fa-gear"></i> <span class="nav-items-text"> Settings</span></a></li>
       </ul>
+      <form id="search-form">
+        <div class="searchbar-container">
+          <input required name="search" id="search" class="searchbar" type="search" placeholder="Search Movies">
+          <button class="search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+      </form>
     </nav>
   </header>
   <div class="bg-image">
@@ -44,5 +50,6 @@
     </div>
   </div>
   <script src="./scripts/movie-detail.js" type="module"></script>
+  <script src="./scripts/search.js" type="module"></script>
 </body>
 </html>

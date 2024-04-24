@@ -1,5 +1,5 @@
 .movie-container{
-  width: 24%;
+  width: 100%;
   min-height: 200px;
   background-size: cover !important;
   margin-bottom: 20px;
@@ -7,9 +7,15 @@
   text-align: center;
 }
 
+.movie-link{
+  width: 22%;
+  margin: 0 1%;
+}
+
 .pagination{
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .active{
   font-weight: bold;
@@ -48,4 +54,29 @@
   padding: 5px;
   backdrop-filter: blur(20px);
   align-items: center;
+}
+
+@media (max-width: 1000px){
+  .movie-rating{
+    display: none;
+  }
+  .movie-link{
+    width: 30%;
+  }
+}
+
+@media (max-width: 800px){
+  .movie-link{
+    width: 45%;
+  }
+}
+
+@media (max-width: 500px){
+  .movie-link{
+    width: 90%;
+  }
+
+  .container{
+    justify-content: center !important;
+  }
 }

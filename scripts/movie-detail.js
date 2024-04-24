@@ -25,7 +25,6 @@ const addRating = async() =>{
   const sessionId = localStorage.getItem("guestSessionId")
   if(sessionId){
     res = await addMovieRating(sessionId, id, rating);
-    console.log(res);
   }
 }
 
@@ -132,7 +131,7 @@ if(id){
           `
           <div style="position:relative">
             <a href="./actor.html?id=${actor.id}" >
-              <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="img" >
+              <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="actor-img" >
               <div class="absolute-el-name">
                 <p>${actor.name}</p>
               </div>

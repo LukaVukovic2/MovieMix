@@ -20,7 +20,6 @@ const getActorData = async ()=>{
       <p class="${isDeceased(actor.deathday)}">Death: ${new Date(actor.deathday).toLocaleDateString()}</p>
       <p>Placed of birth: ${actor.place_of_birth ? actor.place_of_birth : "unknown"}</p>
     `;
-    console.log(actor)
   }
   else{
     console.log('Failed to load actors data');
@@ -33,7 +32,6 @@ const getMovies = async (id) => {
   try {
     movies = await getMoviesByActor(id);
     if (movies) {
-      console.log(movies)
       movies.results.forEach((movie) => {
         const movieEl = document.createElement('div');
         movieEl.classList.add('swiper-slide');
