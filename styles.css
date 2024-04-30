@@ -98,7 +98,7 @@ nav ul li{
   padding-right: 2vw;
 }
 
-ul li a{
+nav ul li a{
   text-decoration: none;
   color: #e50914;
   display: block;
@@ -429,13 +429,16 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid #e50914;
 }
 
-.dialog-search{
+.dialog{
   position: absolute;
-  top: 15vh;
-  height: 60vh;
+  top: 10vh;
+  height: 75vh;
   width: 50%;
   z-index: 200;
   background-color: #181818;
+  color: whitesmoke;
+  overflow: auto;
+  padding-top: 30px;
 }
 
 #body{
@@ -449,7 +452,7 @@ input[type="range"]::-moz-range-thumb {
   z-index: 150;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .close-modal-btn{
@@ -457,6 +460,7 @@ input[type="range"]::-moz-range-thumb {
   top: 10px;
   right: 10px;
   border: none !important;
+  z-index: 1000;
 }
 
 .flex-space-between{

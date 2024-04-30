@@ -4,7 +4,7 @@ const form = document.getElementById('search-form');
 const search = document.getElementById('search');
 const body = document.querySelector('#body');
 
-const getMatches = async(dialogEl) => {
+const getMatches = async (dialogEl) => {
   const matches = await getSearchMatches(search.value);
   if(matches.results.length == 0){
     dialogEl.innerHTML += "<h2 style='color:#e50914;'>No results found!</h2>"
@@ -40,7 +40,7 @@ const getMatches = async(dialogEl) => {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const dialog = document.createElement('dialog');
-  dialog.classList.add('dialog-search');
+  dialog.classList.add('dialog');
   body.appendChild(dialog);
   body.classList.add('modal-open');
   await getMatches(dialog);
