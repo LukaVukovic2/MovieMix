@@ -7,7 +7,7 @@ const body = document.querySelector('#body');
 const getMatches = async (dialogEl) => {
   const matches = await getSearchMatches(search.value);
   if(matches.results.length == 0){
-    dialogEl.innerHTML += "<h2 style='color:#e50914;'>No results found!</h2>"
+    dialogEl.innerHTML += "<h2>No results found!</h2>"
   }
   else{
     const matchListEl = document.createElement('ul');

@@ -141,3 +141,5 @@ function showSelectedPage(pageNumber){
     }
   });
 }
+
+export{id}

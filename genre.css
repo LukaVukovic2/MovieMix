@@ -56,6 +56,32 @@
   align-items: center;
 }
 
+.noUi-touch-area{
+  cursor: grabbing;
+  color: black;
+  text-align: center;
+}
+
+.noUi-horizontal .noUi-handle{
+  width: auto !important;
+  min-width: 34px !important;
+  padding: 0 5px;
+}
+
+.noUi-handle:after, .noUi-handle:before{
+  display: none !important;
+}
+
+.filter-form, .added-filters-el{
+  padding: 10px 20px;
+}
+
+.slider-el{
+  margin: 10px 30px 10px 0;
+  width: 70%;
+  display: inline-block;
+}
+
 @media (max-width: 1000px){
   .movie-rating{
     display: none;

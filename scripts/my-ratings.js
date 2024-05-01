@@ -17,8 +17,7 @@ const getMyRatings = async ()=>{
             <a class="movie-title" href="movie.html?id=${ratedMovie.id}">${ratedMovie.title}</a>
           </div>
           <a class="btn"><i class="fa-solid fa-minus"></i></a>`;
-        ratedMovieContainer.querySelector('.btn').addEventListener("click", 
-        (e) =>{
+        ratedMovieContainer.querySelector('.btn').addEventListener("click", (e) =>{
           e.preventDefault();
           deleteRating(ratedMovie.id)
         });
