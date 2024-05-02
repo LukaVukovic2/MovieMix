@@ -1,4 +1,5 @@
 import { getMoviesByGenre } from "../api/api-config.js";
+import { movies, filters } from "./filter.js";
 
 const params = new URLSearchParams(window.location.search);
 let totalPages;
@@ -11,12 +12,17 @@ const container = document.querySelector('.container');
 const pagination = document.querySelector('.pagination');
 const title = document.querySelector('.title');
 let navPages;
+let isFetched = false;
 
-pagination.innerHTML += "<li class='current-page active'><a href='#'>" + 1 + "</a></li>";
 
 const getGenre = async (pageNumber) => {
   try {
-    let moviesByPage = await getMoviesByGenre(id, pageNumber);
+    let moviesByPage = await getMoviesByGenre(id, pageNumber, filters);
+    if(movies && !isFetched){
+      moviesByPage = movies;
+      isAdded = false;
+      isFetched = true;
+    }
     totalPages = moviesByPage.total_pages;
     totalResults = moviesByPage.total_results;
     if(totalPages > 20){
@@ -52,7 +58,10 @@ const getGenre = async (pageNumber) => {
 getGenre(page);
 
 function addAllPages(){
-  
+  pagination.innerHTML = `
+    <li id="previous-page" style="visibility: hidden;"><a href="#" aria-label=Previous><span aria-hidden=true>&laquo;</span></a></li>
+    <li class='current-page active'><a href='#'>1</a></li>
+  `;
   for (let i = 2; i <= totalPages; i++) {
     pagination.innerHTML += "<li class='current-page'><a href='#'>" + i + "</a></li>";
   }
@@ -142,4 +151,4 @@ function showSelectedPage(pageNumber){
   });
 }
 
-export{id}
+export{id, getGenre}

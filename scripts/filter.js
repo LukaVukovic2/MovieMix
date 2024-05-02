@@ -1,5 +1,5 @@
 import { getMoviesByGenre } from "../api/api-config.js";
-import {id} from "./genres.js"
+import { id, getGenre } from "./genres.js"
 
 const filterModalBtn = document.querySelector('.filter-modal-btn');
 const body = document.getElementById('body');
@@ -7,26 +7,29 @@ let sliderVote;
 let sliderRuntime;
 let sliderRelease;
 let sliderHandles;
+let dialog;
 
 let filters = {
-  vote: [],
-  runtime: [],
-  release: [],
+  vote: [1, 10],
+  runtime: [1, 200],
+  release: [1874, new Date().getFullYear()],
   language: "en-US",
   sortBy: "vote_average.desc"
 }
+let movies;
 
 let filtersArray = [];
 let initialized = false;
 
 const getMovies = async () =>{
-  console.log(filters)
-  const movies = await getMoviesByGenre(id, 1, filters);
-  console.log(movies);
+  movies = await getMoviesByGenre(id, 1, filters);
+  getGenre(1);
+  body.classList.remove('modal-open');
+  dialog.close();
 }
 
 filterModalBtn.addEventListener("click", async () => {
-  const dialog = document.createElement('dialog');
+  dialog = document.createElement('dialog');
   dialog.classList.add('dialog');
   body.classList.add('modal-open');
   const closeBtn = document.createElement('button');
@@ -77,7 +80,6 @@ function showFilters(dialogEl){
   filterOptions.innerHTML += `
     <p>Language</p>
     <select class="filter-input" name="" id="inputValue4" data-filter="Language" data-index="4">
-      <option value="" selected disabled>Choose language</option>
       <option value="ar-AE">العربية</option>
       <option value="bg-BG">български</option>
       <option value="bn-BD">বাংলা</option>
@@ -87,7 +89,7 @@ function showFilters(dialogEl){
       <option value="da-DK">dansk</option>
       <option value="de-DE">Deutsch</option>
       <option value="el-GR">Ελληνικά</option>
-      <option value="en-US">English</option>
+      <option value="en-US" selected>English</option>
       <option value="eo-EO">Esperanto</option>
       <option value="es-ES">español</option>
       <option value="fa-IR">فارسی</option>
@@ -142,7 +144,7 @@ function showFilters(dialogEl){
       <option value="primary_release_date.asc">Primary release date ascending</option>
       <option value="primary_release_date.desc">Primary release date descending</option>
       <option value="vote_average.asc">Vote average ascending</option>
-      <option value="vote_average.desc">Vote average descending</option>
+      <option value="vote_average.desc" selected>Vote average descending</option>
       <option value="vote_count.asc">Vote count ascending</option>
       <option value="vote_count.desc">Vote count descending</option>
     </select>
@@ -314,3 +316,5 @@ function applyFilters(){
   console.log(filters);
   getMovies();
 }
+
+export { movies, filters }
