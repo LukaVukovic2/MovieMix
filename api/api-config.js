@@ -102,17 +102,8 @@ const getMoviesByGenre = async (id, page, filters) => {
       filters.release[1] = parseFloat(filters.release[1]) + "-12-31";
     }
     setPreferences();
-    let response = await fetch(`
-      https://api.themoviedb.org/3/discover/movie?with_genres=${id}&page=${page}
-      &vote_average.gte=${filters?.vote[0] || 1}
-      &vote_average.lte=${filters?.vote[1] || 10}
-      &with_runtime.gte=${filters?.runtime[0] || 1}
-      &with_runtime.lte=${filters?.runtime[1] || 200}
-      &release_date.gte=${filters?.release[0] || 1874}
-      &release_date.lte=${filters?.release[1] || new Date().getFullYear()}
-      &language=${filters?.language || language}
-      &sort_by=${filters?.sortBy || "vote_average.desc"}
-      &vote_count.gte=500`,
+    const req = `https://api.themoviedb.org/3/discover/movie?with_genres=${id}&page=${page}&vote_average.gte=${filters?.vote[0] || 1}&vote_average.lte=${filters?.vote[1] || 10}&with_runtime.gte=${filters?.runtime[0] || 1}&with_runtime.lte=${filters?.runtime[1] || 200}&release_date.gte=${filters?.release[0] || 1874}&release_date.lte=${filters?.release[1] || new Date().getFullYear()}&language=${filters?.language || language}&sort_by=${filters?.sortBy || "vote_average.desc"}&vote_count.gte=500`
+    let response = await fetch(req,
       optionsGet
     );
     if (!response.ok){

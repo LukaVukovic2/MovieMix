@@ -2,6 +2,7 @@ import { getMoviesByGenre } from "../api/api-config.js";
 import { movies, filters } from "./filter.js";
 
 const params = new URLSearchParams(window.location.search);
+const filterModalBtn = document.querySelector('.filter-modal-btn');
 let totalPages;
 let totalResults;
 let isAdded = false;
@@ -35,6 +36,7 @@ const getGenre = async (pageNumber) => {
     }
     if(moviesByPage.results){
       container.innerHTML = '';
+      filterModalBtn.style.display = "inline-block";
       moviesByPage.results.forEach(movie => {
         container.innerHTML += `
           <a href="movie.html?id=${movie.id}" class="movie-link">
@@ -69,7 +71,7 @@ function addAllPages(){
 
   document.querySelectorAll(".current-page").forEach(pageNumber => {
     pageNumber.addEventListener("click", e => {
-      showSelectedPage(e.target.text)
+      showSelectedPage(e.target.text);
     });
   });
   

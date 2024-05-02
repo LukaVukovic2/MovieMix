@@ -6,7 +6,7 @@ const body = document.getElementById('body');
 let sliderVote;
 let sliderRuntime;
 let sliderRelease;
-let sliderHandles;
+let filterForm;
 let dialog;
 
 let filters = {
@@ -19,13 +19,14 @@ let filters = {
 let movies;
 
 let filtersArray = [];
-let initialized = false;
 
 const getMovies = async () =>{
   movies = await getMoviesByGenre(id, 1, filters);
   getGenre(1);
   body.classList.remove('modal-open');
   dialog.close();
+  dialog.innerHTML = "";
+  filtersArray.splice(0, filtersArray.length);
 }
 
 filterModalBtn.addEventListener("click", async () => {
@@ -38,6 +39,8 @@ filterModalBtn.addEventListener("click", async () => {
   closeBtn.addEventListener("click", () => {
     body.classList.remove('modal-open');
     dialog.close();
+    dialog.innerHTML = "";
+    filtersArray.splice(0, filtersArray.length);
   });
   dialog.appendChild(closeBtn);
   body.appendChild(dialog);
@@ -46,18 +49,19 @@ filterModalBtn.addEventListener("click", async () => {
 });
 
 function showFilters(dialogEl){
-  const filterOptions = document.createElement("form");
-  filterOptions.classList.add("filter-form")
-  filterOptions.innerHTML = `
+  filterForm = document.createElement("form");
+  filterForm.classList.add("filter-form");
+  filterForm.id = "filter-form";
+  filterForm.innerHTML = `
     <p>Vote average</p>
     <div id="inputValue1" class="slider-vote slider-el filter-input" data-id="sliderVote" data-filter="Vote average" data-index="1" ></div>
   `;
   const confirmVoteBtn = document.createElement("button");
   confirmVoteBtn.classList.add("confirm-btn");
   confirmVoteBtn.setAttribute("data-index", 1);
-  filterOptions.appendChild(confirmVoteBtn);
+  filterForm.appendChild(confirmVoteBtn);
 
-  filterOptions.innerHTML += `
+  filterForm.innerHTML += `
     <p>Runtime (in minutes)</p>
     <div id="inputValue2" class="slider-runtime slider-el filter-input" data-id="sliderRuntime" data-filter="Runtime" data-index="2"></div>
   `;
@@ -65,9 +69,9 @@ function showFilters(dialogEl){
   const confirmRuntimeBtn = document.createElement("button");
   confirmRuntimeBtn.classList.add("confirm-btn");
   confirmRuntimeBtn.setAttribute("data-index", 2);
-  filterOptions.appendChild(confirmRuntimeBtn);
+  filterForm.appendChild(confirmRuntimeBtn);
 
-  filterOptions.innerHTML += `
+  filterForm.innerHTML += `
     <p>Release year</p>
     <div id="inputValue3" class="slider-release slider-el filter-input" data-id="sliderRelease" data-filter="Release year" data-index="3"></div>
   `;
@@ -75,9 +79,9 @@ function showFilters(dialogEl){
   const confirmReleaseBtn = document.createElement("button");
   confirmReleaseBtn.classList.add("confirm-btn");
   confirmReleaseBtn.setAttribute("data-index", 3);
-  filterOptions.appendChild(confirmReleaseBtn);
+  filterForm.appendChild(confirmReleaseBtn);
 
-  filterOptions.innerHTML += `
+  filterForm.innerHTML += `
     <p>Language</p>
     <select class="filter-input" name="" id="inputValue4" data-filter="Language" data-index="4">
       <option value="ar-AE">العربية</option>
@@ -131,12 +135,11 @@ function showFilters(dialogEl){
     const confirmLanguageBtn = document.createElement("button");
     confirmLanguageBtn.classList.add("confirm-btn");
     confirmLanguageBtn.setAttribute("data-index", 4);
-    filterOptions.appendChild(confirmLanguageBtn);
+    filterForm.appendChild(confirmLanguageBtn);
 
-    filterOptions.innerHTML += `
+    filterForm.innerHTML += `
     <p>Sort by:</p>
     <select class="filter-input" id="inputValue5" data-filter="Sorting" data-index="5">
-      <option value="" selected disabled></option>
       <option value="popularity.asc">Popularity ascending</option>
       <option value="popularity.desc">Popularity descending</option>
       <option value="revenue.asc">Revenue ascending</option>
@@ -153,22 +156,34 @@ function showFilters(dialogEl){
   const confirmSortBtn = document.createElement("button");
   confirmSortBtn.classList.add("confirm-btn");
   confirmSortBtn.setAttribute("data-index", 5);
-  filterOptions.appendChild(confirmSortBtn);
+  filterForm.appendChild(confirmSortBtn);
 
-  filterOptions.innerHTML += `<br><br>
+  filterForm.innerHTML += `<br><br>
     <input class="apply-filters-btn" type="submit" value="Apply filters">
+    <input class="reset-filters-btn" type="button" value="Reset filters">
   `;
   const addedFilters = document.createElement("div");
   addedFilters.classList.add("added-filters-el");
   addedFilters.innerHTML = "<h4>Your filters</h4>";
   dialogEl.appendChild(addedFilters);
-  dialogEl.appendChild(filterOptions);
+  dialogEl.appendChild(filterForm);
 
   const applyFiltersBtn = document.querySelector(".apply-filters-btn");
+  const resetFiltersBtn = document.querySelector(".reset-filters-btn");
+
   applyFiltersBtn.addEventListener("click", (e) =>{
     e.preventDefault();
     applyFilters();
   });
+
+  resetFiltersBtn.addEventListener("click", ()=>{
+    filterForm.reset();
+    sliderVote.noUiSlider.reset();
+    sliderRuntime.noUiSlider.reset();
+    sliderRelease.noUiSlider.reset();
+    const filterInfo = document.querySelector(".added-filters-el");
+    filterInfo.innerHTML = "<h4>Your filters</h4>";
+  })
 
   const confirmFilterBtns = document.querySelectorAll('.confirm-btn');
   
@@ -189,7 +204,6 @@ function showFilters(dialogEl){
         else{
           filters.sortBy = inputField.value;
         }
-        console.log(inputField);
       } 
       else {
         const sliderId = inputField.getAttribute('data-id');
@@ -202,7 +216,6 @@ function showFilters(dialogEl){
           slider = sliderRuntime;
           value = parseFloat(slider.noUiSlider.get()[0]) + "min-" + parseFloat(slider.noUiSlider.get()[1]) + "min";
           filters.runtime = slider.noUiSlider.get();
-          console.log(filters)
         } else {
           slider = sliderRelease;
           value = parseFloat(slider.noUiSlider.get()[0]) + "-" + parseFloat(slider.noUiSlider.get()[1]);
@@ -235,12 +248,7 @@ function showFilters(dialogEl){
       }
     });
   });
-
-  removeSliders();
-  if(!initialized){
     createSliders();
-    initialized = true;
-  }
 }
 
 function createSliders() {
@@ -301,19 +309,9 @@ function createSliders() {
     minHandle[2].innerHTML = min;
     maxHandle[2].innerHTML = max;
   });
-
-  sliderHandles = document.querySelectorAll('.noUi-touch-area');
-}
-
-function removeSliders() {
-  const sliders = document.querySelectorAll('.slider-el');
-  sliders.forEach(slider => {
-    slider.innerHTML = '';
-  });
 }
 
 function applyFilters(){
-  console.log(filters);
   getMovies();
 }
 

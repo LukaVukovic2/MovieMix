@@ -82,6 +82,13 @@
   display: inline-block;
 }
 
+.filter-modal-btn{
+  display: none;
+  background-color: transparent;
+  padding: 5px 20px;
+  margin-top: 0px;
+}
+
 @media (max-width: 1000px){
   .movie-rating{
     display: none;
