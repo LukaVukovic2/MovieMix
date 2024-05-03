@@ -1,0 +1,26 @@
+#contact-form{
+  display: inline-block;
+  width: 350px;
+}
+
+.form-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+}
+
+#contact-form input{
+  width: 70%;
+  line-height: 200%;
+}
+
+#contact-form label{
+  align-self: center;
+}
+
+#form-submit-btn{
+  width: unset !important;
+  background-color: transparent;
+  padding: 5px 20px;
+}
