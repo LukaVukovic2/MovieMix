@@ -80,7 +80,7 @@ var swiper1 = new Swiper('.movie-container', {
     prevEl: '#movies-prev',
   },
   breakpoints: {
-    350: {
+    100: {
       slidesPerView: 1,
       slidesPerGroup: 1
     },

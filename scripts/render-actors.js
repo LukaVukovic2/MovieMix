@@ -13,8 +13,9 @@ const displayActors = async () => {
         actorEl.classList.add('swiper-slide');
         actorEl.innerHTML += 
           ` <a href="./actor.html?id=${actor.id}">
-              <img src="https://image.tmdb.org/t/p/original${actor.profile_path}" class="img" alt="Image">
+              <img src="https://image.tmdb.org/t/p/original${actor.profile_path}" class="img" alt="Image" loading="lazy">
             </a>
+            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             <p>${actor.name}</p>`;
         actorsContainer.appendChild(actorEl);
       }
@@ -33,7 +34,7 @@ var swiper2 = new Swiper('.actors-container', {
     prevEl: '#actors-prev',
   },
   breakpoints: {
-    350: {
+    100: {
       slidesPerView: 1,
       slidesPerGroup: 1,
       

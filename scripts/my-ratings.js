@@ -13,7 +13,7 @@ const getMyRatings = async ()=>{
         ratedMovieContainer.classList.add('rated-movie');
         ratedMovieContainer.innerHTML = `
           <div>
-            <span class="rating-value">${ratedMovie.rating} <i class="fa-regular fa-star" style="color: #e50914;"></i></span>
+            <span class="rating-value">${ratedMovie.rating} <i class="fa-regular fa-star" style="color: rgb(3, 111, 111);"></i></span>
             <a class="movie-title" href="movie.html?id=${ratedMovie.id}">${ratedMovie.title}</a>
           </div>
           <a class="btn"><i class="fa-solid fa-minus"></i></a>`;
