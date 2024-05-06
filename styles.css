@@ -170,12 +170,15 @@ input:-webkit-autofill:active{
   }
 }
 
-@media(max-width: 700px){
+@media(max-width: 820px){
   .nav-items-text{
     display: none;
   }
   .logo{
     width: 30%;
+  }
+  .main{
+    padding: 20px 7%;
   }
 }
 
@@ -398,6 +401,11 @@ input[type="range"]::-moz-range-thumb {
 
 .optional-flex-item{
   position: relative;
+  width: 30%;
+}
+
+.recommend-movie-img{
+  width: 100%;
 }
 
 .actor-link:hover, .genre-info:hover, .movie-title:hover, .match-item:hover{
@@ -411,7 +419,7 @@ input[type="range"]::-moz-range-thumb {
   height: 0;
   margin-right: 10px;
 }
-
+  
 .iframe-container:last-child {
   margin-right: 0;
 }
@@ -472,6 +480,12 @@ input[type="range"]::-moz-range-thumb {
   margin-left: 10px;
 }
 
+.match-item{
+  padding: 3px 0;
+  border-color: lightgrey;
+  border-bottom: 1px;
+}
+
 .match-item:hover{
   background-color: #333333;
   color: #e50914;
@@ -492,15 +506,46 @@ input[type="range"]::-moz-range-thumb {
   width: 300px;
 }
 
+
 @media(max-width: 1200px){
   .actor-img{
     width: 240px;
   }
 }
 
+@media(max-width: 1100px){
+  .movie-rating{
+    display: none;
+  }
+  .movie-info{
+    justify-content: center;
+  }
+}
+
 @media(max-width: 1000px){
   .actor-img{
     width: 180px;
+  }
+  .dialog{
+    width: 75%;
+  }
+  .optional-flex-container{
+    justify-content: flex-start;
+  }
+  .optional-flex-item{
+    width: 45%;
+    margin: 0 2.5%;
+    margin-bottom: 20px;
+  }
+}
+
+@media(max-width: 850px){
+  .swiper-button-next{
+    right: var(--swiper-navigation-sides-offset, -30px)
+  }
+  
+  .swiper-button-prev{
+    left: var(--swiper-navigation-sides-offset, -30px);
   }
 }
 
@@ -510,12 +555,56 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
+@media(max-width: 650px){
+  .optional-flex-item{
+    margin: 0;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  .dialog{
+    width: 95%;
+  }
+}
+
+@media(max-width: 600px){
+  .iframe-container{
+    flex: none;
+    width: 100%;
+    padding-bottom: 56.25%;
+    margin-bottom: 30px;
+  }
+}
+
 @media(max-width: 500px){
   .actor-img{
-    width: 300px;
+    width: 100%;
   }
 
   .cast-photos div{
     margin-bottom: 20px;
   }
+
+
+  .swiper-button-next{
+    right: var(--swiper-navigation-sides-offset, -20px)
+  }
+  
+  .swiper-button-prev{
+    left: var(--swiper-navigation-sides-offset, -20px);
+  }
+}
+
+@media(max-width: 450px){
+  #contact-form input, #contact-form textarea, #contact-form{
+    width: 250px !important;
+  }
+  .form-item{
+    flex-wrap: wrap;
+  }
+}
+
+.search-movie-container{
+  display: flex; 
+  flex-wrap: nowrap;
+  align-items: flex-end;
 }

@@ -17,10 +17,10 @@ const getMatches = async (dialogEl) => {
           <a href="movie.html?id=${match.id}">
             <div class="flex-space-between match-item">
               <span>${match.title}</span>
-              <span>
+              <div class="search-movie-container">
                 <span>${match.release_date ? new Date(match.release_date).getFullYear() : ""}</span>
                 <span class="margin-left">${match.original_language}</span>
-              </span>
+              </div>
             </div>
           </a>
         </li>`;

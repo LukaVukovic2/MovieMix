@@ -32,6 +32,43 @@ var swiper2 = new Swiper('.actors-container', {
     nextEl: '#actors-next',
     prevEl: '#actors-prev',
   },
+  breakpoints: {
+    350: {
+      slidesPerView: 1,
+      slidesPerGroup: 1,
+      
+    },
+    550: {
+      slidesPerView: 1.5,
+      slidesPerGroup: 1,
+      spaceBetween: 10
+    },
+    700: {
+      slidesPerView: 2,
+      slidesPerGroup: 2,
+      spaceBetween: 10
+    },
+    850: {
+      slidesPerView: 2.5,
+      slidesPerGroup: 2,
+      spaceBetween: 10,
+    },
+    1150: {
+      slidesPerView: 3,
+      slidesPerGroup: 3,
+      spaceBetween: 10
+    },
+    1300: {
+      slidesPerView: 3.5,
+      slidesPerGroup: 3,
+      spaceBetween: 10
+    },
+    1400: {
+      slidesPerView: 4,
+      slidesPerGroup: 4,
+      spaceBetween: 10
+    }
+  }
 });
 
 displayActors();

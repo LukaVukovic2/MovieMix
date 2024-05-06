@@ -30,14 +30,18 @@ const getMyRatings = async ()=>{
     }
   }
 }
-getMyRatings()
 
-
-const deleteRating = async(movieId) =>{
-  const response = await deleteMovieRating(sessionId, movieId);
-  setTimeout(() => {
-    getMyRatings();
-    alert('Rating is deleted!');
-  }, 1000);
-  console.log(response);
+window.onload = async() =>{
+  await getMyRatings();
 }
+
+const deleteRating = async (movieId) => {
+  try {
+    await deleteMovieRating(sessionId, movieId);
+    alert('Rating is deleted!');
+    await getMyRatings();
+  } 
+  catch (error) {
+    console.error('Error deleting rating:', error);
+  }
+};

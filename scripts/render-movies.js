@@ -40,7 +40,8 @@ const displayMovies = async () => {
       const movieEl = document.createElement('div');
       movieEl.classList.add('swiper-slide');
       movieEl.innerHTML += 
-        ` <a href="./movie.html?id=${movie.id}"><img src="https://image.tmdb.org/t/p/original${movie.backdrop_path}" class="img" alt="Image"></a>
+        ` <a href="./movie.html?id=${movie.id}"><img src="https://image.tmdb.org/t/p/original${movie.backdrop_path}" loading="lazy" class="img" alt="Image"></a>
+          <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
           <div class="movie-info flex-space-between">
             <p>${movie.title ? movie.title : movie.name}</p>
             <p class="movie-rating ${getColor(movie.vote_average)}">${movie.vote_average.toFixed(2)} <i class="fa-regular fa-star"></i></p>
@@ -78,4 +79,34 @@ var swiper1 = new Swiper('.movie-container', {
     nextEl: '#movies-next',
     prevEl: '#movies-prev',
   },
+  breakpoints: {
+    350: {
+      slidesPerView: 1,
+      slidesPerGroup: 1
+    },
+    550: {
+      slidesPerView: 1.5,
+      slidesPerGroup: 1
+    },
+    700: {
+      slidesPerView: 2,
+      slidesPerGroup: 2
+    },
+    850: {
+      slidesPerView: 2.5,
+      slidesPerGroup: 2
+    },
+    1150: {
+      slidesPerView: 3,
+      slidesPerGroup: 3
+    },
+    1450: {
+      slidesPerView: 3.5,
+      slidesPerGroup: 3
+    },
+    1500: {
+      slidesPerView: 4.5,
+      slidesPerGroup: 4
+    }
+  }
 });

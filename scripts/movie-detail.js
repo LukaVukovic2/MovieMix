@@ -22,9 +22,11 @@ const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 
 const addRating = async() =>{
-  const sessionId = localStorage.getItem("guestSessionId")
+  const sessionId = localStorage.getItem("guestSessionId");
   if(sessionId){
     res = await addMovieRating(sessionId, id, rating);
+    alert('Rating is added!');
+    console.log(res)
   }
 }
 
@@ -175,18 +177,17 @@ function createRatingElement(){
   ratingInputEl.setAttribute("min", "1");
   ratingInputEl.setAttribute("max", "10");
   ratingInputEl.setAttribute("step", "0.25");
-  ratingInputEl.setAttribute("value", "5")
+  ratingInputEl.setAttribute("value", "5");
   ratingInputEl.addEventListener("input", showSelectedRating);
 
   addRatingBtn = document.createElement('a');
   addRatingBtn.classList.add('add-rating-btn');
   addRatingBtn.innerHTML = `
     Add Your Rating <i class="fa-regular fa-plus"></i>
-  `
+  `;
   addRatingBtn.addEventListener("click", ()=>{
     addRating();
-    alert('Rating is added!');
-  })
+  });
   ratingValueEl = document.createElement('span');
   const ratingIcon = document.createElement('span');
   ratingIcon.innerHTML = `<i class="fa-regular fa-star" style="color: #FFD43B;"></i>`;
@@ -225,7 +226,7 @@ function addOptionalElement(similar, videos){
       flexRecommendEl.innerHTML += `
         <div class="optional-flex-item">
           <a href="movie.html?id=${recomMovie.id}">
-            <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="img" >
+            <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="recommend-movie-img" >
             <div class="absolute-el-name">
               <p>${recomMovie.title}</p>
             </div>
