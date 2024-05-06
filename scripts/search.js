@@ -3,6 +3,35 @@ import { getSearchMatches } from "../api/api-config.js";
 const form = document.getElementById('search-form');
 const search = document.getElementById('search');
 const body = document.querySelector('#body');
+const suggestionList = ["Batman", "The Great Escape", "Interstellar", "In Time"];
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    animateSuggestions();
+    setInterval(() => {
+      animateSuggestions();
+    }, 15000);
+  }, 3000);
+
+  function animateSuggestions() {
+    if (suggestionList.length > 0) {
+      let totalDuration = 0;
+      suggestionList.forEach((suggestion, index) => {
+        const length = suggestion.length;
+        if (length > 0) {
+          for (let i = 0; i < length; i++) {
+            setTimeout(() => {
+              search.placeholder = suggestion.slice(0, i + 1);
+            }, totalDuration + 200);
+            totalDuration += 200;
+          }
+        }
+      });
+      setTimeout(() => {
+        search.placeholder = 'Search Movies';
+      }, totalDuration + 500);
+    }
+  }
+});
 
 const getMatches = async (dialogEl) => {
   const matches = await getSearchMatches(search.value);
