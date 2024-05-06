@@ -17,6 +17,7 @@ formSubmitBtn.addEventListener("click", (e) =>{
     console.log("Email: " + emailEl.value);
     console.log("Subject: " + subjectEl.value);
     console.log("Message: " + messageEl.value);
+    contactForm.reset();
   }
   else{
     console.log("Form is invalid!");
