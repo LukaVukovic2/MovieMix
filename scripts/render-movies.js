@@ -1,6 +1,7 @@
 import { fetchMovies, startGuestSession, getGenresList } from "../api/api-config.js"
+import { getColor } from "./color.js";
 
-const moviesContainer = document.querySelector('.movie-wrapper');
+const movieWrapper = document.querySelector('.movie-wrapper');
 const genresContainer = document.querySelector('.genres-list-container');
 let moviesData;
 let session;
@@ -33,9 +34,12 @@ const getGenres = async() =>{
 getGenres();
 
 const displayMovies = async () => {
+  const loadingSpinner = document.querySelector(".loading-spinner");
+  loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
   moviesData = await fetchMovies();
-
+  loadingSpinner.innerHTML = "";
   if (moviesData) {
+    movieWrapper.innerHTML = "";
     moviesData.results.forEach(movie => {
       const movieEl = document.createElement('div');
       movieEl.classList.add('swiper-slide');
@@ -47,7 +51,7 @@ const displayMovies = async () => {
             <p class="movie-rating ${getColor(movie.vote_average)}">${movie.vote_average.toFixed(2)} <i class="fa-regular fa-star"></i></p>
           </div>
           `
-      moviesContainer.appendChild(movieEl);
+      movieWrapper.appendChild(movieEl);
     });
   } else {
     console.log('Failed to fetch movies data');
@@ -55,21 +59,6 @@ const displayMovies = async () => {
 };
 
 displayMovies();
-
-function getColor(rating){
-  if(rating > 8){
-    return "green";
-  }
-  else if(rating > 6){
-    return "yellow";
-  }
-  else if(rating > 4){
-    return "orange";
-  }
-  else {
-    return "red";
-  }
-}
 
 var swiper1 = new Swiper('.movie-container', {
   slidesPerView: 4.5,

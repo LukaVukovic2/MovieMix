@@ -4,6 +4,7 @@ const myRatingsContainer = document.querySelector('.my-rating-container');
 const sessionId = localStorage.getItem("guestSessionId")
 
 const getMyRatings = async ()=>{
+  myRatingsContainer.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`
   if(sessionId){
     const myRatings = await getMyMovieRatings(sessionId);
     if(myRatings?.total_results > 0){

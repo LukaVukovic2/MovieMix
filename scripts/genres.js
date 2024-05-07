@@ -1,5 +1,6 @@
 import { getMoviesByGenre } from "../api/api-config.js";
 import { movies, filters } from "./filter.js";
+import { getColor } from "./color.js";
 
 const params = new URLSearchParams(window.location.search);
 const filterModalBtn = document.querySelector('.filter-modal-btn');
@@ -18,7 +19,12 @@ let isFetched = false;
 
 const getGenre = async (pageNumber) => {
   try {
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
+
     let moviesByPage = await getMoviesByGenre(id, pageNumber, filters);
+    loadingSpinner.innerHTML = "";
+    
     if(movies && !isFetched){
       moviesByPage = movies;
       isAdded = false;
@@ -43,7 +49,7 @@ const getGenre = async (pageNumber) => {
             <div class="movie-container" style="background: url('https://image.tmdb.org/t/p/original${movie.backdrop_path}');">
               <div class="movie-data flex-space-between">
                 <div>${movie.title}</div>
-                <div class="movie-rating">${movie.vote_average.toFixed(2)} 
+                <div class="movie-rating ${getColor(movie.vote_average)}">${movie.vote_average.toFixed(2)} 
                   <i class="fa-regular fa-star"></i>
                 </div>
               </div>

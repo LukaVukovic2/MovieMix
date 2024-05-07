@@ -32,7 +32,11 @@ const addRating = async() =>{
 
 const getMovie = async (id) => {
   try {
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
     movie = await getMovieById(id);
+    loadingSpinner.innerHTML = "";
+  
     createRatingElement();
 
     if (movie instanceof Error) {

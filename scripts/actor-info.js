@@ -30,7 +30,11 @@ getActorData();
 
 const getMovies = async (id) => {
   try {
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
     movies = await getMoviesByActor(id);
+
+    loadingSpinner.innerHTML = "";
     if (movies) {
       movies.results.forEach((movie) => {
         const movieEl = document.createElement('div');
