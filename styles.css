@@ -142,10 +142,6 @@ input:-webkit-autofill:active{
   color: transparent;
 }
 
-.swiper-wrapper{
-  overflow: hidden;
-}
-
 .swiper-button-next, .swiper-button-prev{
   color: rgb(3, 111, 111);
   top: var(--swiper-navigation-top-offset, 40%);

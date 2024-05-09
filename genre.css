@@ -89,6 +89,16 @@
   margin-top: 0px;
 }
 
+.movie-filter-ranking{
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgb(0, 53, 53);
+  box-shadow: 3px 3px 5px black;
+  min-width: 30px;
+  padding: 5px;
+}
+
 @media (max-width: 1000px){
   .movie-rating{
     display: none;

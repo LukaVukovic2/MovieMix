@@ -44,7 +44,9 @@ const displayMovies = async () => {
       const movieEl = document.createElement('div');
       movieEl.classList.add('swiper-slide');
       movieEl.innerHTML += 
-        ` <a href="./movie.html?id=${movie.id}"><img src="https://image.tmdb.org/t/p/original${movie.backdrop_path}" loading="lazy" class="img" alt="Image"></a>
+        ` <a href="./movie.html?id=${movie.id}">
+            <img src="https://image.tmdb.org/t/p/original${movie.backdrop_path}" loading="lazy" class="img" alt="Image">
+          </a>
           <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
           <div class="movie-info flex-space-between">
             <p>${movie.title ? movie.title : movie.name}</p>

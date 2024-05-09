@@ -2,7 +2,7 @@ import { getActorInfo, getMoviesByActor } from "../api/api-config.js";
 
 const actorData = document.querySelector('.actor-desc');
 const actorImage = document.querySelector('.actor-image');
-const movieContainer = document.querySelector('.movie-wrapper');
+const movieWrapper = document.querySelector('.movie-wrapper');
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 let actor;
@@ -29,28 +29,27 @@ const getActorData = async ()=>{
 getActorData();
 
 const getMovies = async (id) => {
-  try {
-    const loadingSpinner = document.querySelector(".loading-spinner");
-    loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
-    movies = await getMoviesByActor(id);
+  const loadingSpinner = document.querySelector(".loading-spinner");
+  loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
+  movies = await getMoviesByActor(id);
 
-    loadingSpinner.innerHTML = "";
-    if (movies) {
-      movies.results.forEach((movie) => {
-        const movieEl = document.createElement('div');
-        movieEl.classList.add('swiper-slide');
-        movieEl.innerHTML += `
-          <a href="movie.html?id=${movie.id}">
-            <img class="movie-img" src="${movie.backdrop_path ? "https://image.tmdb.org/t/p/original" + movie.backdrop_path : "images/movie-img-unavailable.png"}" alt="">
-            <h3>${movie.title}</h3>
-          </a>
-        `;
-        movieContainer.appendChild(movieEl);
-      });
-    }
-  } catch (error) {
-    console.error(error);
-    return null;
+  loadingSpinner.innerHTML = "";
+  if (movies) {
+    movies.results.forEach((movie) => {
+      const movieEl = document.createElement('div');
+      movieEl.classList.add('swiper-slide');
+      movieEl.innerHTML += `
+        <a href="movie.html?id=${movie.id}">
+          <img class="movie-img" src="${movie.backdrop_path ? "https://image.tmdb.org/t/p/original" + movie.backdrop_path : "images/movie-img-unavailable.png"}" loading="lazy" alt="">
+          <h3>${movie.title}</h3>
+        </a>
+        <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+      `;
+      movieWrapper.appendChild(movieEl);
+    });
+  }
+  else{
+    movieWrapper.style.display = "none";
   }
 }
 getMovies(id);
@@ -87,4 +86,34 @@ var swiper3 = new Swiper('.movie-container', {
     nextEl: '#movies-next',
     prevEl: '#movies-prev',
   },
+  breakpoints: {
+    100: {
+      slidesPerView: 1,
+      slidesPerGroup: 1
+    },
+    550: {
+      slidesPerView: 1.5,
+      slidesPerGroup: 1
+    },
+    700: {
+      slidesPerView: 2,
+      slidesPerGroup: 2
+    },
+    850: {
+      slidesPerView: 2.5,
+      slidesPerGroup: 2
+    },
+    1150: {
+      slidesPerView: 3,
+      slidesPerGroup: 3
+    },
+    1450: {
+      slidesPerView: 3.5,
+      slidesPerGroup: 3
+    },
+    1500: {
+      slidesPerView: 4.5,
+      slidesPerGroup: 4
+    }
+  }
 });

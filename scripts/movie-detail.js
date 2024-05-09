@@ -219,12 +219,14 @@ function addOptionalElement(similar, videos){
         <div class="optional-flex-item iframe-container">
           <iframe class="iframe" width="100%" height="100%" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
         </div>
-      `
+        `
     })
   }
-
+  optionalContainer.appendChild(flexTrailersEl);
+  
   const flexRecommendEl = document.createElement('div');
   if(similar.length > 0){
+    optionalContainer.innerHTML += "<h2>You might also like...</h2>"
     flexRecommendEl.classList.add('optional-flex-container');
     similar.forEach(recomMovie =>{
       flexRecommendEl.innerHTML += `
@@ -239,7 +241,5 @@ function addOptionalElement(similar, videos){
       `
     })
   }
-  optionalContainer.appendChild(flexTrailersEl);
-  optionalContainer.innerHTML += "<h2>You might also like...</h2>"
   optionalContainer.appendChild(flexRecommendEl);
 }

@@ -6,7 +6,6 @@ const params = new URLSearchParams(window.location.search);
 const filterModalBtn = document.querySelector('.filter-modal-btn');
 let totalPages;
 let totalResults;
-let isAdded = false;
 const id = params.get('id');
 const genreName = params.get('name');
 let page = 1;
@@ -14,8 +13,6 @@ const container = document.querySelector('.container');
 const pagination = document.querySelector('.pagination');
 const title = document.querySelector('.title');
 let navPages;
-let isFetched = false;
-
 
 const getGenre = async (pageNumber) => {
   try {
@@ -25,10 +22,8 @@ const getGenre = async (pageNumber) => {
     let moviesByPage = await getMoviesByGenre(id, pageNumber, filters);
     loadingSpinner.innerHTML = "";
     
-    if(movies && !isFetched){
+    if(movies && pageNumber == 1){
       moviesByPage = movies;
-      isAdded = false;
-      isFetched = true;
     }
     totalPages = moviesByPage.total_pages;
     totalResults = moviesByPage.total_results;
@@ -37,16 +32,17 @@ const getGenre = async (pageNumber) => {
       totalResults = 400;
     }
     title.innerHTML = `${genreName}: Top ${totalResults} movies`;
-    if (moviesByPage.results && !isAdded) {
+    if (moviesByPage.results && pageNumber == 1) {
       addAllPages(moviesByPage.results.length);
     }
     if(moviesByPage.results){
       container.innerHTML = '';
       filterModalBtn.style.display = "inline-block";
-      moviesByPage.results.forEach(movie => {
+      moviesByPage.results.forEach((movie, index) => {
         container.innerHTML += `
           <a href="movie.html?id=${movie.id}" class="movie-link">
             <div class="movie-container" style="background: url('https://image.tmdb.org/t/p/original${movie.backdrop_path}');">
+              <div class="movie-filter-ranking"">${(pageNumber - 1) * 20 + index + 1}</div>
               <div class="movie-data flex-space-between">
                 <div>${movie.title}</div>
                 <div class="movie-rating ${getColor(movie.vote_average)}">${movie.vote_average.toFixed(2)} 
@@ -83,7 +79,6 @@ function addAllPages(){
   
   document.getElementById("next-page").addEventListener("click", showNextPage);
   document.getElementById("previous-page").addEventListener("click", showPreviousPage);
-  isAdded = true;
 }
 
 function showNextPage(){
