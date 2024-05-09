@@ -37,7 +37,7 @@
   .bg-image-cont:after{
     background-image: linear-gradient(to top,
     rgba(24, 24, 24, 1) 0%,
-    rgba(24, 24, 24, 0) 50%) !important
+    rgba(24, 24, 24, 0) 50%) !important;
   }
 
   .bg-image-cont{
