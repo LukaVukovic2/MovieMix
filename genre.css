@@ -17,8 +17,10 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+
 .active{
-  font-weight: bold;
+  font-weight: 900;
+  transform: scale(1.25);
 }
 
 .text-center{
@@ -26,7 +28,7 @@
 }
 
 .active a{
-  color: rgb(4, 166,166);
+  color: var(--secondary);
 }
 
 .pagination li{
@@ -35,10 +37,6 @@
 
 .pagination a{
   padding: 0 10px;
-}
-
-.nav ul{
-  margin-top: 20px;
 }
 
 .container{
@@ -93,7 +91,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background-color: rgb(0, 53, 53);
+  background-color: var(--tertiary);
   box-shadow: 3px 3px 5px black;
   min-width: 30px;
   padding: 5px;

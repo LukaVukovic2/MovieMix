@@ -136,7 +136,7 @@ if(id){
           <div style="position:relative">
             <a href="./actor.html?id=${actor.id}" >
               <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="actor-img" >
-              <div class="absolute-el-name">
+              <div class="absolute-el-name absolute-full">
                 <p>${actor.name}</p>
               </div>
             </a>
@@ -196,7 +196,7 @@ function createRatingElement(){
   ratingValueEl.innerHTML = '5';
   
   const ratingContainer = document.createElement('div');
-  ratingContainer.classList.add('rating-container')
+  ratingContainer.classList.add('rating-container', 'flex-center');
   ratingContainer.appendChild(ratingValueEl);
   ratingContainer.appendChild(ratingIcon);
   ratingContainer.appendChild(ratingInputEl);
@@ -211,11 +211,11 @@ function addOptionalElement(similar, videos){
       <hr>
       <h2>Trailers and teasers</h2>
     `
-    flexTrailersEl.classList.add('optional-flex-container');
+    flexTrailersEl.classList.add('optional-flex-container', 'flex-space-between');
     videos.forEach(video =>{
       flexTrailersEl.innerHTML += `
         <div class="optional-flex-item iframe-container">
-          <iframe class="iframe" width="100%" height="100%" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
+          <iframe class="iframe absolute-full" width="100%" height="100%" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
         </div>
         `
     })
@@ -225,13 +225,13 @@ function addOptionalElement(similar, videos){
   const flexRecommendEl = document.createElement('div');
   if(similar.length > 0){
     optionalContainer.innerHTML += "<h2>You might also like...</h2>"
-    flexRecommendEl.classList.add('optional-flex-container');
+    flexRecommendEl.classList.add('optional-flex-container', 'flex-space-between');
     similar.forEach(recomMovie =>{
       flexRecommendEl.innerHTML += `
         <div class="optional-flex-item">
           <a href="movie.html?id=${recomMovie.id}">
             <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="recommend-movie-img" >
-            <div class="absolute-el-name">
+            <div class="absolute-el-name absolute-full">
               <p>${recomMovie.title}</p>
             </div>
           </a>
