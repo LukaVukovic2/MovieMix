@@ -1,9 +1,9 @@
 import { getMovieById, getCastInfo, addMovieRating } from "../api/api-config.js"
 
 const movieDetail = document.querySelector('.movie-detail');
-const mainContent = document.querySelector('.main-content')
+const movieRootEl = document.querySelector('.movie-root')
 const movieExtraDesc = document.querySelector('.movie-extra-desc');
-const bgImage = document.querySelector('.bg-image');
+const bgImageEl = document.querySelector('.bg-image');
 const castContainer = document.querySelector('.cast-container');
 const tagline = document.querySelector('.tagline');
 const genresContainer = document.querySelector('.genres-container');
@@ -11,7 +11,6 @@ const castPhotosContainer = document.querySelector('.cast-photos-container');
 const optionalContainer = document.querySelector('.optional-container');
 const recommend = localStorage.getItem("recommend");
 
-let addRatingBtn;
 let movie;
 let hours;
 let mins;
@@ -40,19 +39,19 @@ const getMovie = async (id) => {
     createRatingElement();
 
     if (movie instanceof Error) {
-      bgImage.innerHTML = "This movie is probably new so we haven't got its data yet!";
-      mainContent.innerHTML = "";
+      bgImageEl.innerHTML = movie.message;
+      movieRootEl.innerHTML = "";
       throw new Error('Failed to get movie');
     } 
     
     if (movie) {
       if(movie.backdrop_path){
-        bgImage.classList.add('primary-photo');
-        bgImage.style.background = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
+        bgImageEl.classList.add('primary-photo');
+        bgImageEl.style.background = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
       }
       else{
-        bgImage.classList.add('secondary-photo');
-        bgImage.style.background = `url('https://image.tmdb.org/t/p/original${movie.poster_path}'`;
+        bgImageEl.classList.add('secondary-photo');
+        bgImageEl.style.background = `url('https://image.tmdb.org/t/p/original${movie.poster_path}'`;
       }
 
       if(movie.tagline){
@@ -64,11 +63,10 @@ const getMovie = async (id) => {
     
       movieDetail.innerHTML += 
       `
-      <h2 class="no-margin">${movie.title ? movie.title : movie.name}</h2>
-      <p>${new Date(movie.release_date).getFullYear()} | ${getMovieDuration(movie.runtime)} | ${movie.genres[0].name}</p>
-      <p>${movie.overview}</p>
+        <h2 class="no-margin">${movie.title ? movie.title : movie.name}</h2>
+        <p>${new Date(movie.release_date).getFullYear()} | ${getMovieDuration(movie.runtime)} | ${movie.genres[0].name}</p>
+        <p>${movie.overview}</p>
       `;
-  
 
       if(movie.genres){
         genresContainer.innerHTML = "<h2>Genres</h2>";
@@ -77,17 +75,17 @@ const getMovie = async (id) => {
         
         movie.genres.forEach(genre =>{
           genresEl.innerHTML += `
-          <div style="border-bottom: 1px solid grey">
-            <a class="genre-info" href="./genre.html?id=${genre.id}&name=${genre.name}">${genre.name}</a>
-          </div>
+            <div style="border-bottom: 1px solid grey">
+              <a class="genre-info" href="./genre.html?id=${genre.id}&name=${genre.name}">${genre.name}</a>
+            </div>
           `;
         })
         genresContainer.appendChild(genresEl);
       }
       if(recommend == "yes"){
         addOptionalElement(
-          movie.similar.results.slice(0,3), 
-          movie.videos.results.slice(0,2)
+          movie.similar.results.slice(0, 3), 
+          movie.videos.results.slice(0, 2)
         );
       }
     }
@@ -184,7 +182,7 @@ function createRatingElement(){
   ratingInputEl.setAttribute("value", "5");
   ratingInputEl.addEventListener("input", showSelectedRating);
 
-  addRatingBtn = document.createElement('a');
+  const addRatingBtn = document.createElement('a');
   addRatingBtn.classList.add('add-rating-btn');
   addRatingBtn.innerHTML = `
     Add Your Rating <i class="fa-regular fa-plus"></i>
@@ -203,7 +201,7 @@ function createRatingElement(){
   ratingContainer.appendChild(ratingIcon);
   ratingContainer.appendChild(ratingInputEl);
   ratingContainer.appendChild(addRatingBtn);
-  mainContent.insertBefore(ratingContainer, movieExtraDesc);
+  movieRootEl.insertBefore(ratingContainer, movieExtraDesc);
 }
 
 function addOptionalElement(similar, videos){

@@ -8,6 +8,8 @@ let sliderRuntime;
 let sliderRelease;
 let filterForm;
 let dialog;
+let movies;
+let filtersArray = [];
 
 let filters = {
   vote: [1, 10],
@@ -16,9 +18,6 @@ let filters = {
   language: "en-US",
   sortBy: "vote_average.desc"
 }
-let movies;
-
-let filtersArray = [];
 
 const getMovies = async () =>{
   movies = await getMoviesByGenre(id, 1, filters);
@@ -56,9 +55,7 @@ function showFilters(dialogEl){
     <p>Vote average</p>
     <div id="inputValue1" class="slider-vote slider-el filter-input" data-id="sliderVote" data-filter="Vote average" data-index="1" ></div>
   `;
-  const confirmVoteBtn = document.createElement("button");
-  confirmVoteBtn.classList.add("confirm-btn");
-  confirmVoteBtn.setAttribute("data-index", 1);
+  const confirmVoteBtn = createConfirmBtn(1);
   filterForm.appendChild(confirmVoteBtn);
 
   filterForm.innerHTML += `
@@ -66,9 +63,7 @@ function showFilters(dialogEl){
     <div id="inputValue2" class="slider-runtime slider-el filter-input" data-id="sliderRuntime" data-filter="Runtime" data-index="2"></div>
   `;
 
-  const confirmRuntimeBtn = document.createElement("button");
-  confirmRuntimeBtn.classList.add("confirm-btn");
-  confirmRuntimeBtn.setAttribute("data-index", 2);
+  const confirmRuntimeBtn = createConfirmBtn(2);
   filterForm.appendChild(confirmRuntimeBtn);
 
   filterForm.innerHTML += `
@@ -76,9 +71,7 @@ function showFilters(dialogEl){
     <div id="inputValue3" class="slider-release slider-el filter-input" data-id="sliderRelease" data-filter="Release year" data-index="3"></div>
   `;
 
-  const confirmReleaseBtn = document.createElement("button");
-  confirmReleaseBtn.classList.add("confirm-btn");
-  confirmReleaseBtn.setAttribute("data-index", 3);
+  const confirmReleaseBtn = createConfirmBtn(3);
   filterForm.appendChild(confirmReleaseBtn);
 
   filterForm.innerHTML += `
@@ -132,123 +125,123 @@ function showFilters(dialogEl){
       <option value="zh-TW">中文（繁體）</option>
     </select>`;
     
-    const confirmLanguageBtn = document.createElement("button");
-    confirmLanguageBtn.classList.add("confirm-btn");
-    confirmLanguageBtn.setAttribute("data-index", 4);
+    const confirmLanguageBtn = createConfirmBtn(4)
     filterForm.appendChild(confirmLanguageBtn);
 
     filterForm.innerHTML += `
-    <p>Sort by:</p>
-    <select class="filter-input" id="inputValue5" data-filter="Sorting" data-index="5">
-      <option value="popularity.asc">Popularity ascending</option>
-      <option value="popularity.desc">Popularity descending</option>
-      <option value="revenue.asc">Revenue ascending</option>
-      <option value="revenue.desc">Revenue descending</option>
-      <option value="primary_release_date.asc">Primary release date ascending</option>
-      <option value="primary_release_date.desc">Primary release date descending</option>
-      <option value="vote_average.asc">Vote average ascending</option>
-      <option value="vote_average.desc" selected>Vote average descending</option>
-      <option value="vote_count.asc">Vote count ascending</option>
-      <option value="vote_count.desc">Vote count descending</option>
-    </select>
-  `;
+      <p>Sort by:</p>
+      <select class="filter-input" id="inputValue5" data-filter="Sorting" data-index="5">
+        <option value="popularity.asc">Popularity ascending</option>
+        <option value="popularity.desc">Popularity descending</option>
+        <option value="revenue.asc">Revenue ascending</option>
+        <option value="revenue.desc">Revenue descending</option>
+        <option value="primary_release_date.asc">Primary release date ascending</option>
+        <option value="primary_release_date.desc">Primary release date descending</option>
+        <option value="vote_average.asc">Vote average ascending</option>
+        <option value="vote_average.desc" selected>Vote average descending</option>
+        <option value="vote_count.asc">Vote count ascending</option>
+        <option value="vote_count.desc">Vote count descending</option>
+      </select>
+    `;
   
-  const confirmSortBtn = document.createElement("button");
-  confirmSortBtn.classList.add("confirm-btn");
-  confirmSortBtn.setAttribute("data-index", 5);
-  filterForm.appendChild(confirmSortBtn);
+    const confirmSortBtn = createConfirmBtn(5);
+    filterForm.appendChild(confirmSortBtn);
 
-  filterForm.innerHTML += `<br><br>
-    <input class="apply-filters-btn" type="submit" value="Apply filters">
-    <input class="reset-filters-btn" type="button" value="Reset filters">
-  `;
-  const addedFilters = document.createElement("div");
-  addedFilters.classList.add("added-filters-el");
-  addedFilters.innerHTML = "<h4>Your filters</h4>";
-  dialogEl.appendChild(addedFilters);
-  dialogEl.appendChild(filterForm);
+    filterForm.innerHTML += `<br><br>
+      <input class="apply-filters-btn" type="submit" value="Apply filters">
+      <input class="reset-filters-btn" type="button" value="Reset filters">
+    `;
+    const addedFilters = document.createElement("div");
+    addedFilters.classList.add("added-filters-el");
+    addedFilters.innerHTML = "<h4>Your filters</h4>";
+    dialogEl.appendChild(addedFilters);
+    dialogEl.appendChild(filterForm);
 
-  const applyFiltersBtn = document.querySelector(".apply-filters-btn");
-  const resetFiltersBtn = document.querySelector(".reset-filters-btn");
+    const applyFiltersBtn = document.querySelector(".apply-filters-btn");
+    const resetFiltersBtn = document.querySelector(".reset-filters-btn");
 
-  applyFiltersBtn.addEventListener("click", (e) =>{
-    e.preventDefault();
-    applyFilters();
-  });
-
-  resetFiltersBtn.addEventListener("click", ()=>{
-    filterForm.reset();
-    sliderVote.noUiSlider.reset();
-    sliderRuntime.noUiSlider.reset();
-    sliderRelease.noUiSlider.reset();
-    const filterInfo = document.querySelector(".added-filters-el");
-    filterInfo.innerHTML = "<h4>Your filters</h4>";
-  })
-
-  const confirmFilterBtns = document.querySelectorAll('.confirm-btn');
-  
-  confirmFilterBtns.forEach(button => {
-    button.innerHTML = "Confirm";
-    button.addEventListener("click", (e) => {
+    applyFiltersBtn.addEventListener("click", (e) =>{
       e.preventDefault();
+      applyFilters();
+    });
+
+    resetFiltersBtn.addEventListener("click", ()=>{
+      filterForm.reset();
+      sliderVote.noUiSlider.reset();
+      sliderRuntime.noUiSlider.reset();
+      sliderRelease.noUiSlider.reset();
+      const filterInfo = document.querySelector(".added-filters-el");
+      filterInfo.innerHTML = "<h4>Your filters</h4>";
+      filtersArray.splice(0, filtersArray.length);
+    })
+
+    const confirmFilterBtns = document.querySelectorAll('.confirm-btn');
   
-      let value;
-      const index = button.getAttribute('data-index');
-      const inputField = document.getElementById(`inputValue${index}`)
-  
-      if (inputField.tagName === "SELECT") { 
-        value = inputField.options[inputField.selectedIndex].innerHTML;
-        if(inputField.getAttribute("data-filter") == "Language"){
-          filters.language = inputField.value;
+    confirmFilterBtns.forEach(button => {
+      button.innerHTML = "Confirm";
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+    
+        let value;
+        const index = button.getAttribute('data-index');
+        const inputField = document.getElementById(`inputValue${index}`)
+    
+        if (inputField.tagName === "SELECT") { 
+          value = inputField.options[inputField.selectedIndex].innerHTML;
+          if(inputField.getAttribute("data-filter") == "Language"){
+            filters.language = inputField.value;
+          }
+          else{
+            filters.sortBy = inputField.value;
+          }
+        } 
+        else {
+          const sliderId = inputField.getAttribute('data-id');
+          let slider;
+          if (sliderId === "sliderVote") {
+            slider = sliderVote;
+            value = slider.noUiSlider.get()[0] + "-" + slider.noUiSlider.get()[1];
+            filters.vote = slider.noUiSlider.get();
+          } 
+          else if (sliderId === "sliderRuntime") {
+            slider = sliderRuntime;
+            value = parseFloat(slider.noUiSlider.get()[0]) + "min-" + parseFloat(slider.noUiSlider.get()[1]) + "min";
+            filters.runtime = slider.noUiSlider.get();
+          } 
+          else {
+            slider = sliderRelease;
+            value = parseFloat(slider.noUiSlider.get()[0]) + "-" + parseFloat(slider.noUiSlider.get()[1]);
+            filters.release = slider.noUiSlider.get();
+          }
+        }
+        const filter = inputField.getAttribute("data-filter");
+        const filterInfo = document.createElement("span");
+        filterInfo.classList.add("filter-info");
+        filterInfo.setAttribute("data-filter", filter);
+        filterInfo.setAttribute("data-index", index);
+        filterInfo.innerHTML = filter + ": " + value;
+    
+        const existingFilter = addedFilters.querySelector(`span[data-filter="${filter}"]`);
+        if (existingFilter) {
+          const existingIndex = filtersArray.indexOf(filter);
+          filtersArray.splice(existingIndex, 1);
+          existingFilter.remove();
+        }
+
+        addedFilters.appendChild(filterInfo);
+        filtersArray.push(value);
+        if(filtersArray.length !== 1){
+          filterInfo.innerHTML = ", " + filter + ": " + value;
+          addedFilters.appendChild(filterInfo);
         }
         else{
-          filters.sortBy = inputField.value;
+          filterInfo.innerHTML = filter + ": " + value;
+          addedFilters.appendChild(filterInfo);
         }
-      } 
-      else {
-        const sliderId = inputField.getAttribute('data-id');
-        let slider;
-        if (sliderId === "sliderVote") {
-          slider = sliderVote;
-          value = slider.noUiSlider.get()[0] + "-" + slider.noUiSlider.get()[1];
-          filters.vote = slider.noUiSlider.get();
-        } else if (sliderId === "sliderRuntime") {
-          slider = sliderRuntime;
-          value = parseFloat(slider.noUiSlider.get()[0]) + "min-" + parseFloat(slider.noUiSlider.get()[1]) + "min";
-          filters.runtime = slider.noUiSlider.get();
-        } else {
-          slider = sliderRelease;
-          value = parseFloat(slider.noUiSlider.get()[0]) + "-" + parseFloat(slider.noUiSlider.get()[1]);
-          filters.release = slider.noUiSlider.get();
-        }
-      }
-      const filter = inputField.getAttribute("data-filter");
-      const filterInfo = document.createElement("span");
-      filterInfo.classList.add("filter-info");
-      filterInfo.setAttribute("data-filter", filter);
-      filterInfo.setAttribute("data-index", index);
-      filterInfo.innerHTML = filter + ": " + value;
-  
-      const existingFilter = addedFilters.querySelector(`span[data-filter="${filter}"]`);
-      if (existingFilter) {
-        const existingIndex = filtersArray.indexOf(filter);
-        filtersArray.splice(existingIndex, 1);
-        existingFilter.remove();
-      }
-
-      addedFilters.appendChild(filterInfo);
-      filtersArray.push(value);
-      if(filtersArray.length !== 1){
-        filterInfo.innerHTML = ", " + filter + ": " + value;
-        addedFilters.appendChild(filterInfo);
-      }
-      else{
-        filterInfo.innerHTML = filter + ": " + value;
-        addedFilters.appendChild(filterInfo);
-      }
-    });
-  });
-    createSliders();
+      });
+    }
+  );
+  createSliders();
 }
 
 function createSliders() {
@@ -313,6 +306,13 @@ function createSliders() {
 
 function applyFilters(){
   getMovies();
+}
+
+function createConfirmBtn(dataIndex){
+  const confirmBtn = document.createElement("button");
+  confirmBtn.classList.add("confirm-btn");
+  confirmBtn.setAttribute("data-index", dataIndex); 
+  return confirmBtn;
 }
 
 export { movies, filters }

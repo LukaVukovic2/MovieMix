@@ -33,7 +33,7 @@ const getGenre = async (pageNumber) => {
     }
     title.innerHTML = `${genreName}: Top ${totalResults} movies`;
     if (moviesByPage.results && pageNumber == 1) {
-      addAllPages(moviesByPage.results.length);
+      addAllPages(totalPages);
     }
     if(moviesByPage.results){
       container.innerHTML = '';
@@ -61,7 +61,7 @@ const getGenre = async (pageNumber) => {
 
 getGenre(page);
 
-function addAllPages(){
+function addAllPages(sumPages){
   pagination.innerHTML = `
     <li id="previous-page" style="visibility: hidden;"><a href="#" aria-label=Previous><span aria-hidden=true>&laquo;</span></a></li>
     <li class='current-page active'><a href='#'>1</a></li>
@@ -69,7 +69,11 @@ function addAllPages(){
   for (let i = 2; i <= totalPages; i++) {
     pagination.innerHTML += "<li class='current-page'><a href='#'>" + i + "</a></li>";
   }
-  pagination.innerHTML += "<li id='next-page'><a href='#' aria-label=Next><span aria-hidden=true>&raquo;</span></a></li>";
+  if(sumPages > 1){
+    pagination.innerHTML += "<li id='next-page'><a href='#' aria-label=Next><span aria-hidden=true>&raquo;</span></a></li>";
+    document.getElementById("next-page").addEventListener("click", showNextPage);
+    document.getElementById("previous-page").addEventListener("click", showPreviousPage);
+  }
 
   document.querySelectorAll(".current-page").forEach(pageNumber => {
     pageNumber.addEventListener("click", e => {
@@ -77,8 +81,6 @@ function addAllPages(){
     });
   });
   
-  document.getElementById("next-page").addEventListener("click", showNextPage);
-  document.getElementById("previous-page").addEventListener("click", showPreviousPage);
 }
 
 function showNextPage(){

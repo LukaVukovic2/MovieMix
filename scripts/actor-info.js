@@ -1,15 +1,14 @@
 import { getActorInfo, getMoviesByActor } from "../api/api-config.js";
 
+const actorContainer = document.querySelector('.actor-container-root');
 const actorData = document.querySelector('.actor-desc');
 const actorImage = document.querySelector('.actor-image');
 const movieWrapper = document.querySelector('.movie-wrapper');
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
-let actor;
-let movies;
 
 const getActorData = async ()=>{
-  actor = await getActorInfo(id);
+  const actor = await getActorInfo(id);
   if(actor){
     let bio = actor.biography.replace(/\n/g, "<br>");
     actorImage.setAttribute("src", actor.profile_path ? `https://image.tmdb.org/t/p/original${actor.profile_path}`: `images/photo-unavailable.png`);
@@ -22,7 +21,7 @@ const getActorData = async ()=>{
     `;
   }
   else{
-    console.log('Failed to load actors data');
+    actorContainer.innerHTML += '<h2>Failed to load actors data</h2>';
   }
 }
 
@@ -31,11 +30,11 @@ getActorData();
 const getMovies = async (id) => {
   const loadingSpinner = document.querySelector(".loading-spinner");
   loadingSpinner.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
-  movies = await getMoviesByActor(id);
+  const moviesByActor = await getMoviesByActor(id);
 
   loadingSpinner.innerHTML = "";
-  if (movies) {
-    movies.results.forEach((movie) => {
+  if (moviesByActor) {
+    moviesByActor.results.forEach((movie) => {
       const movieEl = document.createElement('div');
       movieEl.classList.add('swiper-slide');
       movieEl.innerHTML += `
