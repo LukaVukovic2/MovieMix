@@ -3,6 +3,7 @@ let appendToResponse = "";
 
 const headers = {
   accept: 'application/json',
+  'content-type': 'application/json',
   Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
 }
 
@@ -16,225 +17,134 @@ const optionsDelete = {
   headers
 }
 
-const fetchMovies = async () => {
-  try {
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/trending/all/day?language=${language}`, optionsGet);
+async function fetchData(url, options, errMsg){
+  try{
+    const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error('Failed to fetch movies');
+      throw new Error(errMsg);
     }
     const moviesData = await response.json();
     return moviesData;
-  } catch (error) {
+  }
+  catch (error) {
+    if(error.message == "Unknown Movie ID"){
+      return new Error("This movie is probably new so we haven't got its data yet :(");
+    }
     console.error(error);
     return null;
   }
+}
+
+export const fetchMovies = async () => {
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/trending/all/day?language=${language}`;
+  const errorMessage = 'Failed to fetch movies';
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 };
 
-const fetchActors = async () =>{
-  try {
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/trending/person/day?language=${language}`, optionsGet);
-    if(!response.ok){
-      throw new Error('Failed to fetch actors');
-    }
-    const actorsData = await response.json();
-    return actorsData;
-  } catch (error){
-    console.error(error);
-    return null;
-  }
+export const fetchActors = async () =>{
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/trending/person/day?language=${language}`;
+  const errorMessage = "Failed to fetch actors/people";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const getMovieById = async (id) =>{
-  try {
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=${language}&append_to_response=${appendToResponse}`, optionsGet);
-    if (!response.ok) {
-      throw new Error('Failed to get movie');
-    }
-    const movie = await response.json();
-    return movie;
-  } 
-  catch (error) {
-    console.error(error);
-    return error;
-  }
+export const getMovieById = async (id) =>{
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/movie/${id}?language=${language}&append_to_response=${appendToResponse}`;
+  const errorMessage = "Unknown Movie ID";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response; 
 }
 
-const getCastInfo = async (id) => {
-  try {
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?language=${language}`, optionsGet);
-    if (!response.ok) {
-      throw new Error('Failed to get movie');
-    }
-    const movie = await response.json();
-    return movie;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+export const getCastInfo = async (id) => {
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/movie/${id}/credits?language=${language}`;
+  const errorMessage = "Failed to get whole cast";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const getMoviesByActor = async (id) => {
-  try {
-    setPreferences();
-    const response = await fetch(`
-      https://api.themoviedb.org/3/discover/movie?with_people=${id}&language=${language}`,
-      optionsGet
-    );
-    if (!response.ok) {
-      throw new Error('Failed to get movie');
-    }
-    const movies = await response.json();
-    return movies;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+export const getMoviesByActor = async (id) => {
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/discover/movie?with_people=${id}&language=${language}`;
+  const errorMessage = "Failed to get movies by actor";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const getMoviesByGenre = async (id, page, filters) => {
-  try {
-    if(filters?.release){
-      filters.release[0] = parseFloat(filters.release[0]) + "-01-01";
-      filters.release[1] = parseFloat(filters.release[1]) + "-12-31";
-    }
-    setPreferences();
-    const req = `https://api.themoviedb.org/3/discover/movie?with_genres=${id}&page=${page}&vote_average.gte=${filters?.vote[0] || 1}&vote_average.lte=${filters?.vote[1] || 10}&with_runtime.gte=${filters?.runtime[0] || 1}&with_runtime.lte=${filters?.runtime[1] || 200}&release_date.gte=${filters?.release[0] || 1874}&release_date.lte=${filters?.release[1] || new Date().getFullYear()}&language=${filters?.language || language}&sort_by=${filters?.sortBy || "vote_average.desc"}&vote_count.gte=500`
-    let response = await fetch(req,
-      optionsGet
-    );
-    if (!response.ok){
-      throw new Error('Failed to get movies by genre');
-    }
-    let moviesByGenre = await response.json();
-    
-    return moviesByGenre;
-  } catch (error){
-    console.error(error);
-    return null;
+export const getMoviesByGenre = async (id, page, filters) => {
+  setPreferences();
+  if(filters?.release){
+    filters.release[0] = parseFloat(filters.release[0]) + "-01-01";
+    filters.release[1] = parseFloat(filters.release[1]) + "-12-31";
   }
+  const url = `https://api.themoviedb.org/3/discover/movie?with_genres=${id}&page=${page}&vote_average.gte=${filters?.vote[0] || 1}&vote_average.lte=${filters?.vote[1] || 10}&with_runtime.gte=${filters?.runtime[0] || 1}&with_runtime.lte=${filters?.runtime[1] || 200}&release_date.gte=${filters?.release[0] || 1874}&release_date.lte=${filters?.release[1] || new Date().getFullYear()}&language=${filters?.language || language}&sort_by=${filters?.sortBy || "vote_average.desc"}&vote_count.gte=500`;
+  const errorMessage = "Failed to fetch movies for this genre";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const getActorInfo = async (id) =>{
-  try{
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/person/${id}?language=${language}`, optionsGet);
-    if(!response.ok){
-      throw new Error('Failed to get actors information');
-    }
-    const actorsInfo = await response.json();
-    return actorsInfo;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+export const getActorInfo = async (id) =>{
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/person/${id}?language=${language}`;
+  const errorMessage = "Failed to get actors information";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const startGuestSession = async() =>{
-  try{
-    const response = await fetch(`https://api.themoviedb.org/3/authentication/guest_session/new?language=${language}`, optionsGet);
-    if(!response.ok){
-      throw new Error('Failed to start session');
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+export const startGuestSession = async() =>{
+  const url = `https://api.themoviedb.org/3/authentication/guest_session/new?language=${language}`;
+  const errorMessage = "Failed to start guest session";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const addMovieRating = async(guestId, movieId, rating) =>{
-  try{
-    const response = await fetch(`
-    https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`,
+export const addMovieRating = async(guestId, movieId, rating) =>{
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`;
+  const errorMessage = "Failed to add movie rating";
+  const response = await fetch(
+    url,
     {
       method: 'POST',
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmQyMmIzNDkzZDQ4MjRmOGJjZGI3ZTMzNDRhNjU5NiIsInN1YiI6IjY2MDgwMGJmYTg5NGQ2MDE3YzY1NjY2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.E2fP-TzEtZoTGNR547cDZREHP-Qh-wu7yoiMzl27C2A'
-      },
+      headers,
       body: `{"value": ${rating}}`
-      }
-    );
-    if(!response.ok){
-      throw new Error('Failed to add rating');
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+    },
+    errorMessage
+  );
+  return response;
 }
 
-const getMyMovieRatings = async (guestId)=>{
-  try{
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies?language=${language}`, optionsGet);
-    if(!response.ok){
-      throw new Error("Failed to get your ratings");
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+export const getMyMovieRatings = async (guestId)=>{
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/guest_session/${guestId}/rated/movies?language=${language}`;
+  const errorMessage = "Failed to get user movie ratings";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const deleteMovieRating = async (guestId, movieId)=>{
-  try{
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`, optionsDelete);
-    if(!response.ok){
-      throw new Error('Failed to delete rating');
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+export const deleteMovieRating = async (guestId, movieId)=>{
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/rating?guest_session_id=${guestId}`;
+  const errorMessage = "Failed to delete user rating";
+  const response = await fetchData(url, optionsDelete, errorMessage);
+  return response;
 }
 
-const getGenresList = async() =>{
-  try{
-    setPreferences();
-    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?language=${language}`, optionsGet);
-    if(!response.ok){
-      throw new Error('Failed to get genres list');
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+export const getGenresList = async() =>{
+  setPreferences();
+  const url = `https://api.themoviedb.org/3/genre/movie/list?language=${language}`;
+  const errorMessage = "Failed to get genres";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
-const getSearchMatches = async(query) =>{
-  try{
-    const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}`, optionsGet);
-    if(!response.ok){
-      throw new Error("Failed to get matches");
-    }
-    const resData = await response.json();
-    return resData;
-  }
-  catch(error){
-    console.error(error);
-    return null;
-  }
+export const getSearchMatches = async(query) =>{
+  const url = `https://api.themoviedb.org/3/search/movie?query=${query}`;
+  const errorMessage = "Failed to get search matches";
+  const response = await fetchData(url, optionsGet, errorMessage);
+  return response;
 }
 
 function setPreferences(){
@@ -247,6 +157,3 @@ function setPreferences(){
     appendToResponse = "similar,videos";
   }
 }
-
-export { fetchMovies, fetchActors, getMovieById, getCastInfo, getMoviesByActor, getMoviesByGenre, getActorInfo, startGuestSession, 
-  addMovieRating, getMyMovieRatings, deleteMovieRating, getGenresList, getSearchMatches};
