@@ -37,7 +37,7 @@ async function fetchData(url, options, errMsg){
 
 export const fetchMovies = async () => {
   setPreferences();
-  const url = `https://api.themoviedb.org/3/trending/all/day?language=${language}`;
+  const url = `https://api.themoviedb.org/3/trending/all/week?language=${language}`;
   const errorMessage = 'Failed to fetch movies';
   const response = await fetchData(url, optionsGet, errorMessage);
   return response;
@@ -45,8 +45,8 @@ export const fetchMovies = async () => {
 
 export const fetchActors = async () =>{
   setPreferences();
-  const url = `https://api.themoviedb.org/3/trending/person/day?language=${language}`;
-  const errorMessage = "Failed to fetch actors/people";
+  const url = `https://api.themoviedb.org/3/person/popular?with_known_for_department=acting${language}`;
+  const errorMessage = "Failed to fetch actors";
   const response = await fetchData(url, optionsGet, errorMessage);
   return response;
 }

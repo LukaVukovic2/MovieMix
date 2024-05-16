@@ -1,10 +1,9 @@
 import { fetchActors } from "../api/api-config.js";
 
-let actorsData;
 const actorsContainer = document.querySelector('.actors-wrapper');
 
 const displayActors = async () => {
-  actorsData = await fetchActors();
+  const actorsData = await fetchActors();
   if (actorsData) {
     actorsData.results.forEach((actor) => {
       if(actor.profile_path){

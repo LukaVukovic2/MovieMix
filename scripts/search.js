@@ -4,6 +4,7 @@ const form = document.getElementById('search-form');
 const search = document.getElementById('search');
 const body = document.querySelector('#body');
 const suggestionList = ["Batman", "The Great Escape", "Interstellar", "In Time"];
+
 window.addEventListener('load', () => {
   setTimeout(() => {
     animateSuggestions();

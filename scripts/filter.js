@@ -52,14 +52,14 @@ function showFilters(dialogEl){
   filterForm.classList.add("filter-form");
   filterForm.id = "filter-form";
   filterForm.innerHTML = `
-    <p>Vote average</p>
+    <span class="filter-title">Vote average</span>
     <div id="inputValue1" class="slider-vote slider-el filter-input" data-id="sliderVote" data-filter="Vote average" data-index="1" ></div>
   `;
   const confirmVoteBtn = createConfirmBtn(1);
   filterForm.appendChild(confirmVoteBtn);
 
   filterForm.innerHTML += `
-    <p>Runtime (in minutes)</p>
+    <span class="filter-title">Runtime (in minutes)</span>
     <div id="inputValue2" class="slider-runtime slider-el filter-input" data-id="sliderRuntime" data-filter="Runtime" data-index="2"></div>
   `;
 
@@ -67,7 +67,7 @@ function showFilters(dialogEl){
   filterForm.appendChild(confirmRuntimeBtn);
 
   filterForm.innerHTML += `
-    <p>Release year</p>
+    <span class="filter-title">Release year</span>
     <div id="inputValue3" class="slider-release slider-el filter-input" data-id="sliderRelease" data-filter="Release year" data-index="3"></div>
   `;
 
@@ -75,7 +75,7 @@ function showFilters(dialogEl){
   filterForm.appendChild(confirmReleaseBtn);
 
   filterForm.innerHTML += `
-    <p>Language</p>
+    <span class="filter-title">Language</span>
     <select class="filter-input" name="" id="inputValue4" data-filter="Language" data-index="4">
       <option value="ar-AE">العربية</option>
       <option value="bg-BG">български</option>
@@ -129,7 +129,7 @@ function showFilters(dialogEl){
     filterForm.appendChild(confirmLanguageBtn);
 
     filterForm.innerHTML += `
-      <p>Sort by:</p>
+      <span class="filter-title">Sort by:</span>
       <select class="filter-input" id="inputValue5" data-filter="Sorting" data-index="5">
         <option value="popularity.asc">Popularity ascending</option>
         <option value="popularity.desc">Popularity descending</option>

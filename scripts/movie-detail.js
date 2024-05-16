@@ -19,15 +19,21 @@ let rating = 5;
 let ratingValueEl;
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
+const sessionId = localStorage.getItem("guestSessionId");
 
-const addRating = async() =>{
-  const sessionId = localStorage.getItem("guestSessionId");
-  if(sessionId){
-    res = await addMovieRating(sessionId, id, rating);
-    alert('Rating is added!');
-    console.log(res)
+const addRating = async () => {
+  if (sessionId) {
+    try {
+      res = await addMovieRating(sessionId, id, rating);
+      alert('Rating is added!');
+      console.log(res);
+    } catch (error) {
+      console.error('Error adding rating:', error);
+    }
   }
-}
+};
+
+
 
 const getMovie = async (id) => {
   try {
@@ -178,7 +184,7 @@ function createRatingElement(){
   ratingInputEl.setAttribute("type", "range");
   ratingInputEl.setAttribute("min", "1");
   ratingInputEl.setAttribute("max", "10");
-  ratingInputEl.setAttribute("step", "0.25");
+  ratingInputEl.setAttribute("step", "0.5");
   ratingInputEl.setAttribute("value", "5");
   ratingInputEl.addEventListener("input", showSelectedRating);
 

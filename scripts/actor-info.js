@@ -10,6 +10,7 @@ const id = urlParams.get('id');
 const getActorData = async ()=>{
   const actor = await getActorInfo(id);
   if(actor){
+    document.title += " - " + actor.name;
     let bio = actor.biography.replace(/\n/g, "<br>");
     actorImage.setAttribute("src", actor.profile_path ? `https://image.tmdb.org/t/p/original${actor.profile_path}`: `images/photo-unavailable.png`);
     actorData.innerHTML += `

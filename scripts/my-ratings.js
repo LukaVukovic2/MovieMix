@@ -18,9 +18,9 @@ const getMyRatings = async ()=>{
             <a class="movie-title" href="movie.html?id=${ratedMovie.id}">${ratedMovie.title}</a>
           </div>
           <a class="btn"><i class="fa-solid fa-minus"></i></a>`;
-        ratedMovieContainer.querySelector('.btn').addEventListener("click", (e) =>{
+        ratedMovieContainer.querySelector('.btn').addEventListener("click", async(e) =>{
           e.preventDefault();
-          deleteRating(ratedMovie.id)
+          await deleteRating(ratedMovie.id)
         });
         myRatingsContainer.appendChild(ratedMovieContainer);
         myRatingsContainer.appendChild(document.createElement('hr'));
@@ -38,9 +38,10 @@ window.onload = async() =>{
 
 const deleteRating = async (movieId) => {
   try {
-    await deleteMovieRating(sessionId, movieId);
+    const res = await deleteMovieRating(sessionId, movieId);
     alert('Rating is deleted!');
     await getMyRatings();
+    console.log(res);
   } 
   catch (error) {
     console.error('Error deleting rating:', error);

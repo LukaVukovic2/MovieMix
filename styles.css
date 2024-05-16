@@ -289,7 +289,7 @@ a{
   text-decoration: none;
 }
 
-.add-rating-btn, .filter-modal-btn, #form-submit-btn{
+.add-rating-btn, .filter-modal-btn, #form-submit-btn, .confirm-btn, .apply-filters-btn, .reset-filters-btn{
   border: 1px solid var(--primary);
   padding: 5px;
   margin: 20px 0;
@@ -298,6 +298,20 @@ a{
   transition: all 0.125s ease-in-out;
 }
 
+.confirm-btn, .apply-filters-btn, .reset-filters-btn{
+  margin: 0;
+  background-color: var(--secondary);
+  color: #fff;
+  margin-left: 10px;
+}
+
+.confirm-btn:hover, .apply-filters-btn:hover, .reset-filters-btn:hover{
+  background-color: var(--primary);
+}
+
+.filter-title{
+  display: block;
+}
 
 .add-rating-btn:hover, .filter-modal-btn:hover, #form-submit-btn:hover{
   color: var(--secondary);
@@ -638,5 +652,8 @@ html, body {
   }
   .form-item{
     flex-wrap: wrap;
+  }
+  .genre-name{
+    padding: 5px 10px;
   }
 }
