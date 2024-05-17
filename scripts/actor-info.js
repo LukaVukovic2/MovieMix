@@ -18,7 +18,7 @@ const getActorData = async ()=>{
       <p>${actor.birthday ? getAge(actor.birthday, actor.deathday): "Age: unknown"}</p>
       <p>Birthday: ${actor.birthday ? new Date(actor.birthday).toLocaleDateString() : "unknown"}</p>
       <p class="${isDeceased(actor.deathday)}">Death: ${new Date(actor.deathday).toLocaleDateString()}</p>
-      <p>Placed of birth: ${actor.place_of_birth ? actor.place_of_birth : "unknown"}</p>
+      <p>Place of birth: ${actor.place_of_birth ? actor.place_of_birth : "unknown"}</p>
     `;
   }
   else{

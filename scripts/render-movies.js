@@ -4,19 +4,6 @@ import { getColor } from "./color.js";
 const movieWrapper = document.querySelector('.movie-wrapper');
 const genresContainer = document.querySelector('.genres-list-container');
 let moviesData;
-let session;
-
-const startSession = async()=>{
-  session = await startGuestSession();
-  const miliseconds = new Date(session.expires_at).getTime();
-  localStorage.setItem("expirationTime", JSON.stringify(miliseconds));
-  localStorage.setItem("guestSessionId", session.guest_session_id);
-  console.log(session);
-}
-
-if(localStorage.getItem("expirationTime") < new Date().getTime()){
-  startSession();
-}
 
 const getGenres = async() =>{
   const genres = await getGenresList();

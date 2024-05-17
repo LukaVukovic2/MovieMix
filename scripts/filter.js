@@ -74,6 +74,7 @@ function showFilters(dialogEl){
   const confirmReleaseBtn = createConfirmBtn(3);
   filterForm.appendChild(confirmReleaseBtn);
 
+  //Dostupni jezici...
   filterForm.innerHTML += `
     <span class="filter-title">Language</span>
     <select class="filter-input" name="" id="inputValue4" data-filter="Language" data-index="4">
@@ -148,8 +149,8 @@ function showFilters(dialogEl){
     filterForm.appendChild(confirmSortBtn);
 
     filterForm.innerHTML += `<br><br>
-      <input class="apply-filters-btn" type="submit" value="Apply filters">
-      <input class="reset-filters-btn" type="button" value="Reset filters">
+      <input class="apply-filters-btn btn-primary" type="submit" value="Apply filters">
+      <input class="reset-filters-btn btn-primary" type="button" value="Reset filters">
     `;
     const addedFilters = document.createElement("div");
     addedFilters.classList.add("added-filters-el");
@@ -310,7 +311,7 @@ function applyFilters(){
 
 function createConfirmBtn(dataIndex){
   const confirmBtn = document.createElement("button");
-  confirmBtn.classList.add("confirm-btn");
+  confirmBtn.classList.add("confirm-btn", "btn-primary");
   confirmBtn.setAttribute("data-index", dataIndex); 
   return confirmBtn;
 }

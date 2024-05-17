@@ -51,6 +51,7 @@ const getMovie = async (id) => {
     } 
     
     if (movie) {
+      document.title += ' - ' + movie.title;
       if(movie.backdrop_path){
         bgImageEl.classList.add('primary-photo');
         bgImageEl.style.background = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
@@ -133,21 +134,18 @@ if(id){
         }
         else{
           const numberOfActors = movieWithId.cast.length > 3 ? 3 : movieWithId.cast.length;
-          castContainer.innerHTML +=  
-          `
-            ${index < numberOfActors - 1 ? actor.name + ', ' : actor.name} 
-            `
+          castContainer.innerHTML +=  `${index < numberOfActors - 1 ? actor.name + ', ' : actor.name}`;
           castEl.innerHTML +=
           `
-          <div style="position:relative">
-            <a href="./actor.html?id=${actor.id}" >
-              <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="actor-img" >
-              <div class="absolute-el-name absolute-full">
-                <p>${actor.name}</p>
-              </div>
-            </a>
-          </div>
-          `
+            <div style="position:relative">
+              <a href="./actor.html?id=${actor.id}" >
+                <img src="${actor.profile_path ? 'https://image.tmdb.org/t/p/original' + actor.profile_path : "images/photo-unavailable.png"}" alt="photo" class="actor-img" >
+                <div class="absolute-el-name absolute-full">
+                  <p>${actor.name}</p>
+                </div>
+              </a>
+            </div>
+          `;
           castPhotosContainer.appendChild(castEl);
         }
         castPhotosContainer.appendChild(wholeCast);
@@ -189,10 +187,8 @@ function createRatingElement(){
   ratingInputEl.addEventListener("input", showSelectedRating);
 
   const addRatingBtn = document.createElement('a');
-  addRatingBtn.classList.add('add-rating-btn');
-  addRatingBtn.innerHTML = `
-    Add Your Rating <i class="fa-regular fa-plus"></i>
-  `;
+  addRatingBtn.classList.add('btn-primary');
+  addRatingBtn.innerHTML = `Add Your Rating <i class="fa-regular fa-plus"></i>`;
   addRatingBtn.addEventListener("click", ()=>{
     addRating();
   });
@@ -213,17 +209,15 @@ function createRatingElement(){
 function addOptionalElement(similar, videos){
   const flexTrailersEl = document.createElement('div');
   if(videos.length > 0){
-    optionalContainer.innerHTML = `
-      <hr>
-      <h2>Trailers and teasers</h2>
-    `
+    optionalContainer.innerHTML = `<hr><h2>Trailers and teasers</h2>`;
     flexTrailersEl.classList.add('optional-flex-container', 'flex-space-between');
     videos.forEach(video =>{
-      flexTrailersEl.innerHTML += `
+      flexTrailersEl.innerHTML += 
+      `
         <div class="optional-flex-item iframe-container">
           <iframe class="iframe absolute-full" width="100%" height="100%" src="https://www.youtube.com/embed/${video.key}" frameborder="0" allowfullscreen></iframe>
         </div>
-        `
+      `;
     })
   }
   optionalContainer.appendChild(flexTrailersEl);
@@ -233,7 +227,8 @@ function addOptionalElement(similar, videos){
     optionalContainer.innerHTML += "<h2>You might also like...</h2>"
     flexRecommendEl.classList.add('optional-flex-container', 'flex-space-between');
     similar.forEach(recomMovie =>{
-      flexRecommendEl.innerHTML += `
+      flexRecommendEl.innerHTML += 
+      `
         <div class="optional-flex-item">
           <a href="movie.html?id=${recomMovie.id}">
             <img src="${recomMovie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + recomMovie.backdrop_path : "images/movie-img-unavailable.png"}" alt="photo" class="recommend-movie-img" >
@@ -242,7 +237,7 @@ function addOptionalElement(similar, videos){
             </div>
           </a>
         </div>
-      `
+      `;
     })
   }
   optionalContainer.appendChild(flexRecommendEl);

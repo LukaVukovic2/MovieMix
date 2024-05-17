@@ -18,7 +18,6 @@ if(recommendLS && languageLS){
 
 function validateForm(){
   selectedRecommendation.forEach(option =>{
-
     if(option.checked){
       recommend = option.value;
     }

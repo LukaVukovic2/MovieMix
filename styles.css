@@ -289,13 +289,17 @@ a{
   text-decoration: none;
 }
 
-.add-rating-btn, .filter-modal-btn, #form-submit-btn, .confirm-btn, .apply-filters-btn, .reset-filters-btn{
+.btn-primary{
   border: 1px solid var(--primary);
   padding: 5px;
   margin: 20px 0;
   cursor: pointer;
   color:var(--primary);
   transition: all 0.125s ease-in-out;
+}
+
+.apply-changes-btn{
+  background-color: transparent;
 }
 
 .confirm-btn, .apply-filters-btn, .reset-filters-btn{
@@ -311,9 +315,10 @@ a{
 
 .filter-title{
   display: block;
+  margin-top: 10px;
 }
 
-.add-rating-btn:hover, .filter-modal-btn:hover, #form-submit-btn:hover{
+.btn-primary:hover{
   color: var(--secondary);
   border: 1px solid var(--secondary);
   font-weight: bold;
@@ -377,19 +382,6 @@ input[type="range"]::-moz-range-thumb {
   margin: 0 auto;
   max-width: 960px;
   padding: 30px;
-}
-
-.apply-changes-btn{
-  margin-top: 10px;
-  background-color: transparent;
-  border: 1px solid var(--primary);
-  color: #fff;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.apply-changes-btn:hover{
-  background-color: #333333;
 }
 
 .optional-flex-container{

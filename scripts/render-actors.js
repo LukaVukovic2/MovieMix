@@ -10,11 +10,13 @@ const displayActors = async () => {
         const actorEl = document.createElement('div');
         actorEl.classList.add('swiper-slide');
         actorEl.innerHTML += 
-          ` <a href="./actor.html?id=${actor.id}">
-              <img src="https://image.tmdb.org/t/p/original${actor.profile_path}" class="img" alt="Image" loading="lazy">
-            </a>
-            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
-            <p>${actor.name}</p>`;
+        ` 
+          <a href="./actor.html?id=${actor.id}">
+            <img src="https://image.tmdb.org/t/p/original${actor.profile_path}" class="img" alt="Image" loading="lazy">
+          </a>
+          <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+          <p>${actor.name}</p>
+        `;
         actorsContainer.appendChild(actorEl);
       }
     });
@@ -22,6 +24,8 @@ const displayActors = async () => {
     console.log('Failed to fetch movies data');
   }
 };
+
+displayActors();
 
 var swiper2 = new Swiper('.actors-container', {
   slidesPerView: 4.5,
@@ -69,5 +73,3 @@ var swiper2 = new Swiper('.actors-container', {
     }
   }
 });
-
-displayActors();

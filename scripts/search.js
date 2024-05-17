@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
   function animateSuggestions() {
     if (suggestionList.length > 0) {
       let totalDuration = 0;
-      suggestionList.forEach((suggestion, index) => {
+      suggestionList.forEach((suggestion) => {
         const length = suggestion.length;
         if (length > 0) {
           for (let i = 0; i < length; i++) {
@@ -27,9 +27,12 @@ window.addEventListener('load', () => {
           }
         }
       });
-      setTimeout(() => {
-        search.placeholder = 'Search Movies';
-      }, totalDuration + 500);
+      setTimeout(
+        () => {
+          search.placeholder = 'Search Movies';
+        }, 
+        totalDuration + 500
+      );
     }
   }
 });
@@ -37,12 +40,13 @@ window.addEventListener('load', () => {
 const getMatches = async (dialogEl) => {
   const matches = await getSearchMatches(search.value);
   if(matches.results.length == 0){
-    dialogEl.innerHTML += "<h2>No results found!</h2>"
+    dialogEl.innerHTML += "<h2>No results found!</h2>";
   }
   else{
     const matchListEl = document.createElement('ul');
     matches.results.forEach(match => {
-      matchListEl.innerHTML += `
+      matchListEl.innerHTML += 
+      `
         <li>
           <a href="movie.html?id=${match.id}">
             <div class="flex-space-between match-item">
@@ -53,7 +57,8 @@ const getMatches = async (dialogEl) => {
               </div>
             </div>
           </a>
-        </li>`;
+        </li>
+      `;
     });
     dialogEl.appendChild(matchListEl);
   }
