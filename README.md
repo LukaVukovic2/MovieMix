@@ -1,6 +1,6 @@
 # MovieMix
 
-Web application where you can view movies or actors fetched from 'The Movie Database RESTful API' and interact with the data in an interesting way
+<a href="https://lukavukovic2.github.io/MovieMix/home.html">Web application</a> where you can view movies or actors fetched from 'The Movie Database RESTful API' and interact with the data in an interesting way
 
 # Demo
 
