@@ -67,14 +67,15 @@ function addAllPages(sumPages){
     <li id="previous-page" style="visibility: hidden;"><a href="#" aria-label=Previous><span aria-hidden=true>&laquo;</span></a></li>
     <li class='current-page active'><a href='#'>1</a></li>
   `;
+  
+  for (let i = 2; i <= totalPages; i++) {
+    pagination.innerHTML += "<li class='current-page'><a href='#'>" + i + "</a></li>";
+  }
+  
   if(sumPages > 1){
     pagination.innerHTML += "<li id='next-page'><a href='#' aria-label=Next><span aria-hidden=true>&raquo;</span></a></li>";
     document.getElementById("next-page").addEventListener("click", showNextPage);
     document.getElementById("previous-page").addEventListener("click", showPreviousPage);
-  }
-
-  for (let i = 2; i <= totalPages; i++) {
-    pagination.innerHTML += "<li class='current-page'><a href='#'>" + i + "</a></li>";
   }
 
   document.querySelectorAll(".current-page").forEach(pageNumber => {
